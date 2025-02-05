@@ -17,3 +17,7 @@ The purpose of this tool is to assist experts, such as Occupational Health Physi
 ## Inspiration
 
 Initially, I relied on tools like Tactiq, but I encountered limitations such as restricted customization options, lack of diarization, and no report generation capabilities. These shortcomings inspired me to build my own solution through this project, addressing these gaps and adding enhanced features. My hope is that this tool will one day prove valuable to others facing similar challenges! :)
+
+## Design
+
+Prototype: [Figma](<https://www.figma.com/design/cauonFuiDNyksk8pUSj63x/Music-Player-UI-(Community)?node-id=1002-5&t=yzTWNv4pdcUQSScV-1>)
