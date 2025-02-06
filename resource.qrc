@@ -1,0 +1,16 @@
+<RCC>
+  <qresource prefix="Icons">
+    <file>images/icons/icons8-export-pdf_gray.png</file>
+    <file>images/icons/icons8-export-pdf_red.png</file>
+    <file>images/icons/icons8-import_gray.png</file>
+    <file>images/icons/icons8-import_red.png</file>
+    <file>images/icons/icons8-record_gray.png</file>
+    <file>images/icons/icons8-record_red.png</file>
+    <file>images/icons/icons8-run-command_gray.png</file>
+    <file>images/icons/icons8-run-command_red.png</file>
+    <file>images/icons/icons8-setting_gray.png</file>
+    <file>images/icons/icons8-setting_red.png</file>
+    <file>images/icons/icons8-sound_gray.png</file>
+    <file>images/icons/icons8-sound_red.png</file>
+  </qresource>
+</RCC>
