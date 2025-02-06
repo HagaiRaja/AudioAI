@@ -84,7 +84,9 @@ class Ui_Main(object):
         font1 = QFont()
         font1.setKerning(False)
         self.pushButton.setFont(font1)
-        self.pushButton.setStyleSheet(u"text-align: left;")
+        self.pushButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.pushButton.setStyleSheet(u"text-align: left;\n"
+"color: #333;")
         icon = QIcon()
         icon.addFile(u":/Icons/images/icons/icons8-import_gray.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.pushButton.setIcon(icon)
@@ -94,7 +96,8 @@ class Ui_Main(object):
 
         self.pushButton_3 = QPushButton(self.frame_7)
         self.pushButton_3.setObjectName(u"pushButton_3")
-        self.pushButton_3.setStyleSheet(u"text-align: left;")
+        self.pushButton_3.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.pushButton_3.setStyleSheet(u"text-align: left; color: #333; cursor: pointer;")
         icon1 = QIcon()
         icon1.addFile(u":/Icons/images/icons/icons8-record_gray.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.pushButton_3.setIcon(icon1)
@@ -104,7 +107,8 @@ class Ui_Main(object):
 
         self.pushButton_4 = QPushButton(self.frame_7)
         self.pushButton_4.setObjectName(u"pushButton_4")
-        self.pushButton_4.setStyleSheet(u"text-align: left;")
+        self.pushButton_4.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.pushButton_4.setStyleSheet(u"text-align: left; color: #333; cursor: pointer;")
         icon2 = QIcon()
         icon2.addFile(u":/Icons/images/icons/icons8-run-command_gray.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.pushButton_4.setIcon(icon2)
@@ -114,7 +118,8 @@ class Ui_Main(object):
 
         self.pushButton_2 = QPushButton(self.frame_7)
         self.pushButton_2.setObjectName(u"pushButton_2")
-        self.pushButton_2.setStyleSheet(u"text-align: left;")
+        self.pushButton_2.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.pushButton_2.setStyleSheet(u"text-align: left; color: #333; cursor: pointer;")
         icon3 = QIcon()
         icon3.addFile(u":/Icons/images/icons/icons8-export-pdf_gray.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.pushButton_2.setIcon(icon3)
@@ -124,7 +129,8 @@ class Ui_Main(object):
 
         self.pushButton_5 = QPushButton(self.frame_7)
         self.pushButton_5.setObjectName(u"pushButton_5")
-        self.pushButton_5.setStyleSheet(u"text-align: left;")
+        self.pushButton_5.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.pushButton_5.setStyleSheet(u"text-align: left; color: #333; cursor: pointer;")
         icon4 = QIcon()
         icon4.addFile(u":/Icons/images/icons/icons8-setting_gray.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.pushButton_5.setIcon(icon4)

@@ -165,8 +165,12 @@ font-size: 20pt;</string>
                 <kerning>false</kerning>
                </font>
               </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
               <property name="styleSheet">
-               <string notr="true">text-align: left;</string>
+               <string notr="true">text-align: left;
+color: #333;</string>
               </property>
               <property name="text">
                <string> Load</string>
@@ -185,8 +189,11 @@ font-size: 20pt;</string>
             </item>
             <item>
              <widget class="QPushButton" name="pushButton_3">
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
               <property name="styleSheet">
-               <string notr="true">text-align: left;</string>
+               <string notr="true">text-align: left; color: #333; cursor: pointer;</string>
               </property>
               <property name="text">
                <string> Record</string>
@@ -205,8 +212,11 @@ font-size: 20pt;</string>
             </item>
             <item>
              <widget class="QPushButton" name="pushButton_4">
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
               <property name="styleSheet">
-               <string notr="true">text-align: left;</string>
+               <string notr="true">text-align: left; color: #333; cursor: pointer;</string>
               </property>
               <property name="text">
                <string> Action</string>
@@ -225,8 +235,11 @@ font-size: 20pt;</string>
             </item>
             <item>
              <widget class="QPushButton" name="pushButton_2">
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
               <property name="styleSheet">
-               <string notr="true">text-align: left;</string>
+               <string notr="true">text-align: left; color: #333; cursor: pointer;</string>
               </property>
               <property name="text">
                <string> Export</string>
@@ -245,8 +258,11 @@ font-size: 20pt;</string>
             </item>
             <item>
              <widget class="QPushButton" name="pushButton_5">
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
               <property name="styleSheet">
-               <string notr="true">text-align: left;</string>
+               <string notr="true">text-align: left; color: #333; cursor: pointer;</string>
               </property>
               <property name="text">
                <string> Settings</string>
