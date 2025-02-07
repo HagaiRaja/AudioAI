@@ -49,6 +49,12 @@
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="QFrame" name="frame_4">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>200</height>
+         </size>
+        </property>
         <property name="styleSheet">
          <string notr="true">border: 0;</string>
         </property>
@@ -169,8 +175,7 @@ font-size: 20pt;</string>
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
               <property name="styleSheet">
-               <string notr="true">text-align: left;
-color: #333;</string>
+               <string notr="true">text-align: left; color: #333;</string>
               </property>
               <property name="text">
                <string> Load</string>
@@ -193,7 +198,7 @@ color: #333;</string>
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
               <property name="styleSheet">
-               <string notr="true">text-align: left; color: #333; cursor: pointer;</string>
+               <string notr="true">text-align: left; color: #333;</string>
               </property>
               <property name="text">
                <string> Record</string>
@@ -216,7 +221,7 @@ color: #333;</string>
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
               <property name="styleSheet">
-               <string notr="true">text-align: left; color: #333; cursor: pointer;</string>
+               <string notr="true">text-align: left; color: #333;</string>
               </property>
               <property name="text">
                <string> Action</string>
@@ -239,7 +244,7 @@ color: #333;</string>
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
               <property name="styleSheet">
-               <string notr="true">text-align: left; color: #333; cursor: pointer;</string>
+               <string notr="true">text-align: left; color: #333;</string>
               </property>
               <property name="text">
                <string> Export</string>
@@ -262,7 +267,7 @@ color: #333;</string>
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
               <property name="styleSheet">
-               <string notr="true">text-align: left; color: #333; cursor: pointer;</string>
+               <string notr="true">text-align: left; color: #333;</string>
               </property>
               <property name="text">
                <string> Settings</string>
