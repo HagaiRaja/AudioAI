@@ -1,5 +1,10 @@
 <RCC>
   <qresource prefix="Icons">
+    <file>images/icons/icons8-send_gray.png</file>
+    <file>images/icons/icons8-pause_red.png</file>
+    <file>images/icons/icons8-play_red.png</file>
+    <file>images/icons/icons8-audiomaster_gray.png</file>
+    <file>images/icons/icons8-audiomaster_red.png</file>
     <file>images/icons/icons8-export-pdf_gray.png</file>
     <file>images/icons/icons8-export-pdf_red.png</file>
     <file>images/icons/icons8-import_gray.png</file>
