@@ -30,7 +30,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QFrame" name="frame">
+    <widget class="QFrame" name="left_container">
      <property name="minimumSize">
       <size>
        <width>200</width>
@@ -54,7 +54,7 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QFrame" name="frame_4">
+       <widget class="QFrame" name="menu_container">
         <property name="maximumSize">
          <size>
           <width>16777215</width>
@@ -87,7 +87,7 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QFrame" name="frame_6">
+          <widget class="QFrame" name="menu_container_label">
            <property name="maximumSize">
             <size>
              <width>16777215</width>
@@ -120,7 +120,7 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QLabel" name="label">
+             <widget class="QLabel" name="menu_label">
               <property name="font">
                <font>
                 <pointsize>20</pointsize>
@@ -144,7 +144,7 @@ font-size: 20pt;</string>
           </widget>
          </item>
          <item>
-          <widget class="QFrame" name="frame_7">
+          <widget class="QFrame" name="menu_container_option">
            <property name="styleSheet">
             <string notr="true">border: 0;</string>
            </property>
@@ -171,7 +171,7 @@ font-size: 20pt;</string>
              <number>0</number>
             </property>
             <item>
-             <widget class="QPushButton" name="pushButton">
+             <widget class="QPushButton" name="menu_load_button">
               <property name="font">
                <font>
                 <kerning>false</kerning>
@@ -199,7 +199,7 @@ font-size: 20pt;</string>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_3">
+             <widget class="QPushButton" name="menu_record_button">
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -222,7 +222,7 @@ font-size: 20pt;</string>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_4">
+             <widget class="QPushButton" name="menu_action_button">
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -245,7 +245,7 @@ font-size: 20pt;</string>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_2">
+             <widget class="QPushButton" name="menu_export_button">
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -268,7 +268,7 @@ font-size: 20pt;</string>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_5">
+             <widget class="QPushButton" name="menu_settings_button">
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -297,7 +297,7 @@ font-size: 20pt;</string>
        </widget>
       </item>
       <item>
-       <widget class="QFrame" name="frame_5">
+       <widget class="QFrame" name="recording_container">
         <property name="styleSheet">
          <string notr="true">border: 0;</string>
         </property>
@@ -324,7 +324,7 @@ font-size: 20pt;</string>
           <number>0</number>
          </property>
          <item>
-          <widget class="QFrame" name="frame_9">
+          <widget class="QFrame" name="recording_container_label">
            <property name="maximumSize">
             <size>
              <width>16777215</width>
@@ -354,7 +354,7 @@ font-size: 20pt;</string>
              <number>0</number>
             </property>
             <item>
-             <widget class="QLabel" name="label_2">
+             <widget class="QLabel" name="recording_label">
               <property name="font">
                <font>
                 <pointsize>20</pointsize>
@@ -375,7 +375,7 @@ font-size: 20pt;</string>
           </widget>
          </item>
          <item>
-          <widget class="QFrame" name="frame_8">
+          <widget class="QFrame" name="recording_container_list">
            <property name="styleSheet">
             <string notr="true">background-color: #D9D9D9;
 border-radius: 8px; padding-top: 1px;</string>
@@ -403,11 +403,11 @@ border-radius: 8px; padding-top: 1px;</string>
              <number>0</number>
             </property>
             <item row="0" column="0">
-             <widget class="QScrollArea" name="scrollArea">
+             <widget class="QScrollArea" name="recording_container_scrollArea">
               <property name="widgetResizable">
                <bool>true</bool>
               </property>
-              <widget class="QWidget" name="scrollAreaWidgetContents_3">
+              <widget class="QWidget" name="recording_container_frame">
                <property name="geometry">
                 <rect>
                  <x>0</x>
@@ -418,7 +418,7 @@ border-radius: 8px; padding-top: 1px;</string>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_8">
                 <item>
-                 <widget class="QFrame" name="frame_10">
+                 <widget class="QFrame" name="recording1_frame">
                   <property name="maximumSize">
                    <size>
                     <width>16777215</width>
@@ -448,7 +448,7 @@ border-radius: 8px; padding-top: 1px;</string>
                     <number>0</number>
                    </property>
                    <item>
-                    <widget class="QLabel" name="label_3">
+                    <widget class="QLabel" name="recording1_title">
                      <property name="font">
                       <font>
                        <family>Poppins</family>
@@ -465,7 +465,7 @@ border-radius: 8px; padding-top: 1px;</string>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLabel" name="label_4">
+                    <widget class="QLabel" name="recording1_datetime">
                      <property name="font">
                       <font>
                        <family>Poppins</family>
@@ -484,7 +484,7 @@ border-radius: 8px; padding-top: 1px;</string>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QFrame" name="frame_11">
+                 <widget class="QFrame" name="recording2_frame">
                   <property name="maximumSize">
                    <size>
                     <width>16777215</width>
@@ -514,7 +514,7 @@ border-radius: 8px; padding-top: 1px;</string>
                     <number>0</number>
                    </property>
                    <item>
-                    <widget class="QLabel" name="label_6">
+                    <widget class="QLabel" name="recording2_title">
                      <property name="font">
                       <font>
                        <family>Poppins</family>
@@ -531,7 +531,7 @@ border-radius: 8px; padding-top: 1px;</string>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLabel" name="label_5">
+                    <widget class="QLabel" name="recording2_datetime">
                      <property name="font">
                       <font>
                        <family>Poppins</family>
@@ -549,7 +549,7 @@ border-radius: 8px; padding-top: 1px;</string>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QFrame" name="frame_13">
+                 <widget class="QFrame" name="recording3_frame">
                   <property name="frameShape">
                    <enum>QFrame::StyledPanel</enum>
                   </property>
@@ -573,7 +573,7 @@ border-radius: 8px; padding-top: 1px;</string>
                     <number>0</number>
                    </property>
                    <item>
-                    <widget class="QLabel" name="label_9">
+                    <widget class="QLabel" name="recording3_title">
                      <property name="font">
                       <font>
                        <family>Poppins</family>
@@ -590,7 +590,7 @@ border-radius: 8px; padding-top: 1px;</string>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLabel" name="label_8">
+                    <widget class="QLabel" name="recording3_datetime">
                      <property name="font">
                       <font>
                        <family>Poppins</family>
@@ -610,7 +610,7 @@ border-radius: 8px; padding-top: 1px;</string>
                  </widget>
                 </item>
                 <item>
-                 <spacer name="verticalSpacer">
+                 <spacer name="recording_verticalSpacer">
                   <property name="orientation">
                    <enum>Qt::Vertical</enum>
                   </property>
@@ -636,7 +636,7 @@ border-radius: 8px; padding-top: 1px;</string>
     </widget>
    </item>
    <item>
-    <widget class="Line" name="line">
+    <widget class="Line" name="left_center_divider">
      <property name="lineWidth">
       <number>2</number>
      </property>
@@ -646,7 +646,7 @@ border-radius: 8px; padding-top: 1px;</string>
     </widget>
    </item>
    <item>
-    <widget class="QFrame" name="frame_2">
+    <widget class="QFrame" name="center_container">
      <property name="minimumSize">
       <size>
        <width>400</width>
@@ -664,7 +664,7 @@ border-radius: 8px; padding-top: 1px;</string>
        <number>10</number>
       </property>
       <item>
-       <widget class="QFrame" name="frame_15">
+       <widget class="QFrame" name="model_buttons">
         <property name="maximumSize">
          <size>
           <width>16777215</width>
@@ -694,7 +694,7 @@ border-radius: 8px; padding-top: 1px;</string>
           <number>0</number>
          </property>
          <item>
-          <widget class="QFrame" name="frame_23">
+          <widget class="QFrame" name="transcribe_container">
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
@@ -713,7 +713,7 @@ border-radius: 10px;</string>
              <number>5</number>
             </property>
             <item>
-             <widget class="QFrame" name="frame_25">
+             <widget class="QFrame" name="transcribe_container_icon">
               <property name="maximumSize">
                <size>
                 <width>30</width>
@@ -747,7 +747,7 @@ border-radius: 10px;</string>
                 <number>0</number>
                </property>
                <item>
-                <widget class="QPushButton" name="pushButton_6">
+                <widget class="QPushButton" name="transcribe_icon">
                  <property name="text">
                   <string/>
                  </property>
@@ -761,7 +761,7 @@ border-radius: 10px;</string>
              </widget>
             </item>
             <item>
-             <widget class="QFrame" name="frame_24">
+             <widget class="QFrame" name="transcribe_container_content">
               <property name="styleSheet">
                <string notr="true"/>
               </property>
@@ -788,7 +788,7 @@ border-radius: 10px;</string>
                 <number>0</number>
                </property>
                <item>
-                <spacer name="verticalSpacer_2">
+                <spacer name="transcribe_verticalSpacer_top">
                  <property name="orientation">
                   <enum>Qt::Vertical</enum>
                  </property>
@@ -801,7 +801,7 @@ border-radius: 10px;</string>
                 </spacer>
                </item>
                <item>
-                <widget class="QLabel" name="label_11">
+                <widget class="QLabel" name="transcribe_label">
                  <property name="font">
                   <font>
                    <family>Poppins</family>
@@ -819,7 +819,7 @@ border-radius: 10px;</string>
                 </widget>
                </item>
                <item>
-                <widget class="QLabel" name="label_12">
+                <widget class="QLabel" name="transcribe_model">
                  <property name="font">
                   <font>
                    <family>Poppins</family>
@@ -838,7 +838,7 @@ border-radius: 10px;</string>
                 </widget>
                </item>
                <item>
-                <spacer name="verticalSpacer_3">
+                <spacer name="transcribe_verticalSpacer_bottom">
                  <property name="orientation">
                   <enum>Qt::Vertical</enum>
                  </property>
@@ -857,7 +857,7 @@ border-radius: 10px;</string>
           </widget>
          </item>
          <item>
-          <widget class="QFrame" name="frame_22">
+          <widget class="QFrame" name="alignment_container">
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
@@ -876,7 +876,7 @@ border-radius: 10px;</string>
              <number>5</number>
             </property>
             <item>
-             <widget class="QFrame" name="frame_27">
+             <widget class="QFrame" name="alignment_container_icon">
               <property name="maximumSize">
                <size>
                 <width>30</width>
@@ -910,7 +910,7 @@ border-radius: 10px;</string>
                 <number>0</number>
                </property>
                <item>
-                <widget class="QPushButton" name="pushButton_7">
+                <widget class="QPushButton" name="alignment_icon">
                  <property name="text">
                   <string/>
                  </property>
@@ -924,7 +924,7 @@ border-radius: 10px;</string>
              </widget>
             </item>
             <item>
-             <widget class="QFrame" name="frame_26">
+             <widget class="QFrame" name="alignment_container_content">
               <property name="frameShape">
                <enum>QFrame::StyledPanel</enum>
               </property>
@@ -948,7 +948,7 @@ border-radius: 10px;</string>
                 <number>0</number>
                </property>
                <item>
-                <spacer name="verticalSpacer_4">
+                <spacer name="alignment_verticalSpacer_top">
                  <property name="orientation">
                   <enum>Qt::Vertical</enum>
                  </property>
@@ -961,7 +961,7 @@ border-radius: 10px;</string>
                 </spacer>
                </item>
                <item>
-                <widget class="QLabel" name="label_13">
+                <widget class="QLabel" name="alignment_label">
                  <property name="font">
                   <font>
                    <family>Poppins</family>
@@ -979,7 +979,7 @@ border-radius: 10px;</string>
                 </widget>
                </item>
                <item>
-                <widget class="QLabel" name="label_10">
+                <widget class="QLabel" name="alignment_model">
                  <property name="font">
                   <font>
                    <family>Poppins</family>
@@ -995,7 +995,7 @@ border-radius: 10px;</string>
                 </widget>
                </item>
                <item>
-                <spacer name="verticalSpacer_5">
+                <spacer name="alignment_verticalSpacer_bottom">
                  <property name="orientation">
                   <enum>Qt::Vertical</enum>
                  </property>
@@ -1014,7 +1014,7 @@ border-radius: 10px;</string>
           </widget>
          </item>
          <item>
-          <widget class="QFrame" name="frame_19">
+          <widget class="QFrame" name="diarization_container">
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
@@ -1033,7 +1033,7 @@ border-radius: 10px;</string>
              <number>5</number>
             </property>
             <item>
-             <widget class="QFrame" name="frame_29">
+             <widget class="QFrame" name="diarization_container_icon">
               <property name="maximumSize">
                <size>
                 <width>30</width>
@@ -1067,7 +1067,7 @@ border-radius: 10px;</string>
                 <number>0</number>
                </property>
                <item>
-                <widget class="QPushButton" name="pushButton_8">
+                <widget class="QPushButton" name="diarization_icon">
                  <property name="text">
                   <string/>
                  </property>
@@ -1081,7 +1081,7 @@ border-radius: 10px;</string>
              </widget>
             </item>
             <item>
-             <widget class="QFrame" name="frame_28">
+             <widget class="QFrame" name="diarization_container_content">
               <property name="frameShape">
                <enum>QFrame::StyledPanel</enum>
               </property>
@@ -1105,7 +1105,7 @@ border-radius: 10px;</string>
                 <number>0</number>
                </property>
                <item>
-                <spacer name="verticalSpacer_6">
+                <spacer name="diarization_verticalSpacer_top">
                  <property name="orientation">
                   <enum>Qt::Vertical</enum>
                  </property>
@@ -1118,7 +1118,7 @@ border-radius: 10px;</string>
                 </spacer>
                </item>
                <item>
-                <widget class="QLabel" name="label_14">
+                <widget class="QLabel" name="diarization_label">
                  <property name="font">
                   <font>
                    <family>Poppins</family>
@@ -1136,7 +1136,7 @@ border-radius: 10px;</string>
                 </widget>
                </item>
                <item>
-                <widget class="QLabel" name="label_15">
+                <widget class="QLabel" name="diarization_model">
                  <property name="font">
                   <font>
                    <family>Poppins</family>
@@ -1152,7 +1152,7 @@ border-radius: 10px;</string>
                 </widget>
                </item>
                <item>
-                <spacer name="verticalSpacer_7">
+                <spacer name="diarization_verticalSpacer_bottom">
                  <property name="orientation">
                   <enum>Qt::Vertical</enum>
                  </property>
@@ -1171,7 +1171,7 @@ border-radius: 10px;</string>
           </widget>
          </item>
          <item>
-          <widget class="QFrame" name="frame_21">
+          <widget class="QFrame" name="rag_container">
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
@@ -1190,7 +1190,7 @@ border-radius: 10px;</string>
              <number>5</number>
             </property>
             <item>
-             <widget class="QFrame" name="frame_31">
+             <widget class="QFrame" name="rag_container_icon">
               <property name="maximumSize">
                <size>
                 <width>30</width>
@@ -1224,7 +1224,7 @@ border-radius: 10px;</string>
                 <number>0</number>
                </property>
                <item>
-                <widget class="QPushButton" name="pushButton_9">
+                <widget class="QPushButton" name="rag_icon">
                  <property name="text">
                   <string/>
                  </property>
@@ -1238,7 +1238,7 @@ border-radius: 10px;</string>
              </widget>
             </item>
             <item>
-             <widget class="QFrame" name="frame_30">
+             <widget class="QFrame" name="rag_container_content">
               <property name="frameShape">
                <enum>QFrame::StyledPanel</enum>
               </property>
@@ -1262,7 +1262,7 @@ border-radius: 10px;</string>
                 <number>0</number>
                </property>
                <item>
-                <spacer name="verticalSpacer_8">
+                <spacer name="rag_verticalSpacer_top">
                  <property name="orientation">
                   <enum>Qt::Vertical</enum>
                  </property>
@@ -1275,7 +1275,7 @@ border-radius: 10px;</string>
                 </spacer>
                </item>
                <item>
-                <widget class="QLabel" name="label_16">
+                <widget class="QLabel" name="rag_label">
                  <property name="font">
                   <font>
                    <family>Poppins</family>
@@ -1293,7 +1293,7 @@ border-radius: 10px;</string>
                 </widget>
                </item>
                <item>
-                <widget class="QLabel" name="label_17">
+                <widget class="QLabel" name="rag_model">
                  <property name="font">
                   <font>
                    <family>Poppins</family>
@@ -1309,7 +1309,7 @@ border-radius: 10px;</string>
                 </widget>
                </item>
                <item>
-                <spacer name="verticalSpacer_9">
+                <spacer name="rag_verticalSpacer_botom">
                  <property name="orientation">
                   <enum>Qt::Vertical</enum>
                  </property>
@@ -1331,7 +1331,7 @@ border-radius: 10px;</string>
        </widget>
       </item>
       <item>
-       <widget class="QFrame" name="frame_16">
+       <widget class="QFrame" name="audio_player">
         <property name="maximumSize">
          <size>
           <width>16777215</width>
@@ -1361,7 +1361,7 @@ border-radius: 10px;</string>
           <number>0</number>
          </property>
          <item>
-          <widget class="QFrame" name="frame_32">
+          <widget class="QFrame" name="audio_player_now_playing">
            <property name="maximumSize">
             <size>
              <width>16777215</width>
@@ -1391,7 +1391,7 @@ border-radius: 10px;</string>
              <number>0</number>
             </property>
             <item>
-             <spacer name="horizontalSpacer">
+             <spacer name="audio_player_horizontalSpacer_left">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -1404,7 +1404,7 @@ border-radius: 10px;</string>
              </spacer>
             </item>
             <item>
-             <widget class="QFrame" name="frame_34">
+             <widget class="QFrame" name="audio_player_container">
               <property name="frameShape">
                <enum>QFrame::StyledPanel</enum>
               </property>
@@ -1428,7 +1428,7 @@ border-radius: 10px;</string>
                 <number>0</number>
                </property>
                <item>
-                <widget class="QLabel" name="label_19">
+                <widget class="QLabel" name="audio_player_title">
                  <property name="font">
                   <font>
                    <family>Poppins</family>
@@ -1449,7 +1449,7 @@ border-radius: 10px;</string>
                 </widget>
                </item>
                <item>
-                <widget class="QLabel" name="label_20">
+                <widget class="QLabel" name="audio_player_desc">
                  <property name="font">
                   <font>
                    <family>Poppins</family>
@@ -1470,7 +1470,7 @@ border-radius: 10px;</string>
              </widget>
             </item>
             <item>
-             <spacer name="horizontalSpacer_2">
+             <spacer name="audio_player_horizontalSpacer_right">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -1486,7 +1486,7 @@ border-radius: 10px;</string>
           </widget>
          </item>
          <item>
-          <widget class="QFrame" name="frame_33">
+          <widget class="QFrame" name="audio_player_toolbar">
            <property name="maximumSize">
             <size>
              <width>16777215</width>
@@ -1510,7 +1510,7 @@ border-radius: 10px;</string>
              <number>0</number>
             </property>
             <item>
-             <widget class="QPushButton" name="pushButton_10">
+             <widget class="QPushButton" name="audio_player_play_button">
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -1530,7 +1530,7 @@ border-radius: 10px;</string>
              </widget>
             </item>
             <item>
-             <widget class="QSlider" name="horizontalSlider">
+             <widget class="QSlider" name="audio_player_slider">
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -1563,7 +1563,7 @@ background: #FF0000;
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="label_22">
+             <widget class="QLabel" name="audio_player_duration">
               <property name="styleSheet">
                <string notr="true">color: #000;</string>
               </property>
@@ -1579,7 +1579,7 @@ background: #FF0000;
        </widget>
       </item>
       <item>
-       <widget class="QFrame" name="frame_17">
+       <widget class="QFrame" name="ai_chatbox_container">
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
@@ -1603,7 +1603,7 @@ background: #FF0000;
           <number>0</number>
          </property>
          <item>
-          <widget class="QFrame" name="frame_35">
+          <widget class="QFrame" name="ai_chatbox_history_container">
            <property name="styleSheet">
             <string notr="true">background-color: #D9D9D9;
 border-radius: 15px</string>
@@ -1631,7 +1631,7 @@ border-radius: 15px</string>
              <number>12</number>
             </property>
             <item>
-             <widget class="QScrollArea" name="scrollArea_3">
+             <widget class="QScrollArea" name="ai_chatbox_history_scrollable">
               <property name="widgetResizable">
                <bool>true</bool>
               </property>
@@ -1661,7 +1661,7 @@ border-radius: 15px</string>
                  <number>0</number>
                 </property>
                 <item>
-                 <spacer name="verticalSpacer_10">
+                 <spacer name="ai_chatbox_verticalSpacer">
                   <property name="orientation">
                    <enum>Qt::Vertical</enum>
                   </property>
@@ -1674,7 +1674,7 @@ border-radius: 15px</string>
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QFrame" name="frame_37">
+                 <widget class="QFrame" name="ai_chatbox_human1">
                   <property name="styleSheet">
                    <string notr="true">background-color: #575757;
 border-radius: 10px;</string>
@@ -1687,7 +1687,7 @@ border-radius: 10px;</string>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_31">
                    <item>
-                    <widget class="QLabel" name="label_27">
+                    <widget class="QLabel" name="ai_chatbox_human1_label">
                      <property name="styleSheet">
                       <string notr="true">color: #FFF;</string>
                      </property>
@@ -1703,7 +1703,7 @@ border-radius: 10px;</string>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QFrame" name="frame_40">
+                 <widget class="QFrame" name="ai_chatbox_ai1">
                   <property name="styleSheet">
                    <string notr="true">background-color: #868686;
 border-radius: 10px;</string>
@@ -1716,7 +1716,7 @@ border-radius: 10px;</string>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_30">
                    <item>
-                    <widget class="QLabel" name="label_26">
+                    <widget class="QLabel" name="ai_chatbox_ai1_label">
                      <property name="styleSheet">
                       <string notr="true">color: #FFF;</string>
                      </property>
@@ -1731,7 +1731,7 @@ asdasdasd</string>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QFrame" name="frame_39">
+                 <widget class="QFrame" name="ai_chatbox_human2">
                   <property name="styleSheet">
                    <string notr="true">background-color: #575757;
 border-radius: 10px;</string>
@@ -1744,7 +1744,7 @@ border-radius: 10px;</string>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_29">
                    <item>
-                    <widget class="QLabel" name="label_25">
+                    <widget class="QLabel" name="ai_chatbox_human2_label">
                      <property name="styleSheet">
                       <string notr="true">color: #FFF;</string>
                      </property>
@@ -1760,7 +1760,7 @@ border-radius: 10px;</string>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QFrame" name="frame_38">
+                 <widget class="QFrame" name="ai_chatbox_ai2">
                   <property name="styleSheet">
                    <string notr="true">background-color: #868686;
 border-radius: 10px;</string>
@@ -1773,7 +1773,7 @@ border-radius: 10px;</string>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_28">
                    <item>
-                    <widget class="QLabel" name="label_24">
+                    <widget class="QLabel" name="ai_chatbox_ai2_label">
                      <property name="styleSheet">
                       <string notr="true">color: #FFF;</string>
                      </property>
@@ -1795,7 +1795,7 @@ asdasdasd</string>
           </widget>
          </item>
          <item>
-          <widget class="QFrame" name="frame_36">
+          <widget class="QFrame" name="ai_chatbox_input_container">
            <property name="maximumSize">
             <size>
              <width>16777215</width>
@@ -1836,7 +1836,7 @@ padding: 5px;</string>
              <number>0</number>
             </property>
             <item>
-             <widget class="QTextEdit" name="textEdit">
+             <widget class="QTextEdit" name="ai_chatbox_input_textarea">
               <property name="styleSheet">
                <string notr="true">border: None;</string>
               </property>
@@ -1846,7 +1846,7 @@ padding: 5px;</string>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_11">
+             <widget class="QPushButton" name="ai_chatbox_input_button">
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -1878,7 +1878,7 @@ padding: 5px;</string>
     </widget>
    </item>
    <item>
-    <widget class="QFrame" name="frame_3">
+    <widget class="QFrame" name="right_container">
      <property name="minimumSize">
       <size>
        <width>300</width>
@@ -1905,7 +1905,7 @@ padding: 5px;</string>
        <number>12</number>
       </property>
       <item>
-       <widget class="QLabel" name="label_7">
+       <widget class="QLabel" name="transcription_label">
         <property name="maximumSize">
          <size>
           <width>16777215</width>
@@ -1926,7 +1926,7 @@ padding: 5px;</string>
        </widget>
       </item>
       <item>
-       <widget class="QFrame" name="frame_12">
+       <widget class="QFrame" name="transcription_container">
         <property name="styleSheet">
          <string notr="true">background-color: #D9D9D9;
 border-radius: 12px;</string>
@@ -1945,11 +1945,11 @@ border-radius: 12px;</string>
           <number>10</number>
          </property>
          <item row="0" column="0">
-          <widget class="QScrollArea" name="scrollArea_2">
+          <widget class="QScrollArea" name="transcription_scrollArea">
            <property name="widgetResizable">
             <bool>true</bool>
            </property>
-           <widget class="QWidget" name="scrollAreaWidgetContents_4">
+           <widget class="QWidget" name="transcription_scrollArea_frame">
             <property name="geometry">
              <rect>
               <x>0</x>
@@ -1975,7 +1975,7 @@ border-radius: 12px;</string>
               <number>0</number>
              </property>
              <item>
-              <widget class="QFrame" name="frame_14">
+              <widget class="QFrame" name="transcription_speaker1_1">
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
@@ -2009,7 +2009,7 @@ border-radius: 10px;</string>
                  <number>5</number>
                 </property>
                 <item>
-                 <widget class="QLabel" name="label_18">
+                 <widget class="QLabel" name="transcription_speaker1_1_label">
                   <property name="font">
                    <font>
                     <family>Poppins</family>
@@ -2031,7 +2031,7 @@ asdasdasd</string>
               </widget>
              </item>
              <item>
-              <widget class="QFrame" name="frame_20">
+              <widget class="QFrame" name="transcription_speaker2_1">
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
@@ -2065,7 +2065,7 @@ border-radius: 10px;</string>
                  <number>5</number>
                 </property>
                 <item>
-                 <widget class="QLabel" name="label_21">
+                 <widget class="QLabel" name="transcription_speaker2_1_label">
                   <property name="font">
                    <font>
                     <family>Poppins</family>
@@ -2085,7 +2085,7 @@ border-radius: 10px;</string>
               </widget>
              </item>
              <item>
-              <widget class="QFrame" name="frame_18">
+              <widget class="QFrame" name="transcription_speaker3_1">
                <property name="styleSheet">
                 <string notr="true">background-color: #868686;
 border-radius: 10px;</string>
@@ -2113,7 +2113,7 @@ border-radius: 10px;</string>
                  <number>5</number>
                 </property>
                 <item>
-                 <widget class="QLabel" name="label_23">
+                 <widget class="QLabel" name="transcription_speaker3_1_label">
                   <property name="font">
                    <font>
                     <family>Poppins</family>
@@ -2135,7 +2135,7 @@ asdasdasd</string>
               </widget>
              </item>
              <item>
-              <spacer name="verticalSpacer1">
+              <spacer name="transcription_verticalSpacer">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
                </property>
