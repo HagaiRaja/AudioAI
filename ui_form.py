@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'form.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.7.3
+## Created by: Qt User Interface Compiler version 6.8.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -197,6 +197,9 @@ class Ui_Main(object):
         self.recording1_frame = QFrame(self.recording_container_frame)
         self.recording1_frame.setObjectName(u"recording1_frame")
         self.recording1_frame.setMaximumSize(QSize(16777215, 70))
+        self.recording1_frame.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.recording1_frame.setStyleSheet(u"QFrame{background-color:#FFC9C9}\n"
+"QFrame:hover {color:#FFC9C9}")
         self.recording1_frame.setFrameShape(QFrame.StyledPanel)
         self.recording1_frame.setFrameShadow(QFrame.Raised)
         self.verticalLayout_6 = QVBoxLayout(self.recording1_frame)

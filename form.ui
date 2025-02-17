@@ -425,6 +425,13 @@ border-radius: 8px; padding-top: 1px;</string>
                     <height>70</height>
                    </size>
                   </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QFrame{background-color:#FFC9C9}
+QFrame:hover {color:#FFC9C9}</string>
+                  </property>
                   <property name="frameShape">
                    <enum>QFrame::StyledPanel</enum>
                   </property>

@@ -2,8 +2,8 @@
 import sys, os, time
 
 from PySide6.QtWidgets import QApplication, QWidget, QFileDialog, QVBoxLayout, QFrame, QLabel, QSpacerItem, QSizePolicy
-from PySide6.QtGui import (QFont)
-from PySide6.QtCore import (QRect, QSize, QCoreApplication)
+from PySide6.QtGui import (QFont, QCursor)
+from PySide6.QtCore import (Qt, QRect, QSize, QCoreApplication)
 
 # Important:
 # You need to run the following command to generate the ui_form.py file
@@ -42,6 +42,12 @@ class Main(QWidget):
                 self.root_dir = selected_directory
                 self.load_files()
 
+    def setup_player(self, filepath, created_at):
+        print(f"Playing: {filepath} created at {created_at}")
+        # Add your player setup here
+        self.ui.audio_player_title.setText(QCoreApplication.translate("Main", filepath, None))
+        self.ui.audio_player_desc.setText(QCoreApplication.translate("Main", created_at, None))
+
     def load_files(self):
         files = [] # contains pair of (relative path to root_dir, created_at)
         for root, _, filenames in os.walk(self.root_dir):
@@ -66,12 +72,16 @@ class Main(QWidget):
             recording_frame = QFrame()
             recording_frame.setObjectName(f"recording{id}_frame")
             recording_frame.setMaximumSize(QSize(16777215, 70))
+            recording_frame.setStyleSheet(u"QFrame:hover {background-color:#FFC9C9}")
+            recording_frame.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
             recording_frame.setFrameShape(QFrame.StyledPanel)
             recording_frame.setFrameShadow(QFrame.Raised)
             verticalLayout = QVBoxLayout(recording_frame)
             verticalLayout.setSpacing(0)
             verticalLayout.setObjectName(f"verticalLayout_{id}")
             verticalLayout.setContentsMargins(5, 0, 0, 0)
+            # if recording_frame is clicked, setup the player
+            recording_frame.mousePressEvent = lambda event, fp=filepath, ca=created_at: self.setup_player(fp, ca)
 
             recording_title = QLabel(recording_frame)
             recording_title.setObjectName(f"recording{id}_title")
@@ -79,7 +89,8 @@ class Main(QWidget):
             font2.setFamilies([u"Poppins"])
             font2.setBold(True)
             recording_title.setFont(font2)
-            recording_title.setStyleSheet(u"color: #333;")
+            recording_title.setStyleSheet(u"QLabel {color: #333;"
+                                          "background-color:transparent;}")
             verticalLayout.addWidget(recording_title)
             recording_title.setText(QCoreApplication.translate("Main", filepath, None))
 
@@ -89,7 +100,8 @@ class Main(QWidget):
             font3.setFamilies([u"Poppins"])
             font3.setItalic(False)
             recording_datetime.setFont(font3)
-            recording_datetime.setStyleSheet(u"color: #858585;")
+            recording_datetime.setStyleSheet(u"QLabel {color: #858585;"
+                                          "background-color:transparent;}")
             verticalLayout.addWidget(recording_datetime)
             recording_datetime.setText(QCoreApplication.translate("Main", created_at, None))
 
