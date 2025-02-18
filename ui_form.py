@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'form.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.8.2
+## Created by: Qt User Interface Compiler version 6.7.3
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -668,58 +668,103 @@ class Ui_Main(object):
 
         self.verticalLayout_23.addWidget(self.audio_player_now_playing)
 
-        self.audio_player_toolbar = QFrame(self.audio_player)
-        self.audio_player_toolbar.setObjectName(u"audio_player_toolbar")
-        self.audio_player_toolbar.setMaximumSize(QSize(16777215, 70))
-        self.audio_player_toolbar.setFrameShape(QFrame.StyledPanel)
-        self.audio_player_toolbar.setFrameShadow(QFrame.Raised)
-        self.horizontalLayout_10 = QHBoxLayout(self.audio_player_toolbar)
+        self.audio_player_progress = QFrame(self.audio_player)
+        self.audio_player_progress.setObjectName(u"audio_player_progress")
+        self.audio_player_progress.setMaximumSize(QSize(16777215, 70))
+        self.audio_player_progress.setFrameShape(QFrame.StyledPanel)
+        self.audio_player_progress.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_10 = QHBoxLayout(self.audio_player_progress)
         self.horizontalLayout_10.setSpacing(5)
         self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
         self.horizontalLayout_10.setContentsMargins(-1, 0, -1, 0)
-        self.audio_player_play_button = QPushButton(self.audio_player_toolbar)
-        self.audio_player_play_button.setObjectName(u"audio_player_play_button")
-        self.audio_player_play_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-        icon6 = QIcon()
-        icon6.addFile(u":/Icons/images/icons/icons8-play_red.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.audio_player_play_button.setIcon(icon6)
-        self.audio_player_play_button.setIconSize(QSize(35, 35))
+        self.audio_player_current_time = QLabel(self.audio_player_progress)
+        self.audio_player_current_time.setObjectName(u"audio_player_current_time")
+        self.audio_player_current_time.setStyleSheet(u"color: #000;")
 
-        self.horizontalLayout_10.addWidget(self.audio_player_play_button)
+        self.horizontalLayout_10.addWidget(self.audio_player_current_time)
 
-        self.audio_player_slider = QSlider(self.audio_player_toolbar)
+        self.audio_player_slider = QSlider(self.audio_player_progress)
         self.audio_player_slider.setObjectName(u"audio_player_slider")
         self.audio_player_slider.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.audio_player_slider.setStyleSheet(u"QSlider::groove:horizontal {\n"
-"border: 1px solid #333;\n"
-"height: 2px;\n"
-"}\n"
+"                border: 1px solid #333;\n"
+"                height: 2px;\n"
+"                }\n"
 "\n"
-"QSlider::handle:horizontal {\n"
-"background: #F00;\n"
-"width: 10px;\n"
-"height: 2px;\n"
-"margin: -5px -1px;\n"
-"border-radius: 5px;\n"
-"border: 1px solid #FF3333;\n"
-"}\n"
+"                QSlider::handle:horizontal {\n"
+"                background: #F00;\n"
+"                width: 10px;\n"
+"                height: 2px;\n"
+"                margin: -5px -1px;\n"
+"                border-radius: 5px;\n"
+"                border: 1px solid #FF3333;\n"
+"                }\n"
 "\n"
-"QSlider::add-page:horizontal {\n"
-"background: #333;\n"
-"}\n"
+"                QSlider::add-page:horizontal {\n"
+"                background: #333;\n"
+"                }\n"
 "\n"
-"QSlider::sub-page:horizontal {\n"
-"background: #FF0000;\n"
-"}")
+"                QSlider::sub-page:horizontal {\n"
+"                background: #FF0000;\n"
+"                }")
         self.audio_player_slider.setOrientation(Qt.Horizontal)
 
         self.horizontalLayout_10.addWidget(self.audio_player_slider)
 
-        self.audio_player_duration = QLabel(self.audio_player_toolbar)
+        self.audio_player_duration = QLabel(self.audio_player_progress)
         self.audio_player_duration.setObjectName(u"audio_player_duration")
         self.audio_player_duration.setStyleSheet(u"color: #000;")
 
         self.horizontalLayout_10.addWidget(self.audio_player_duration)
+
+
+        self.verticalLayout_23.addWidget(self.audio_player_progress)
+
+        self.audio_player_toolbar = QFrame(self.audio_player)
+        self.audio_player_toolbar.setObjectName(u"audio_player_toolbar")
+        self.audio_player_toolbar.setFrameShape(QFrame.StyledPanel)
+        self.audio_player_toolbar.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_12 = QHBoxLayout(self.audio_player_toolbar)
+        self.horizontalLayout_12.setSpacing(0)
+        self.horizontalLayout_12.setObjectName(u"horizontalLayout_12")
+        self.horizontalLayout_12.setContentsMargins(0, 0, 0, 0)
+        self.audio_player_toolbar_horizontalSpacer_left = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_12.addItem(self.audio_player_toolbar_horizontalSpacer_left)
+
+        self.backward_button = QPushButton(self.audio_player_toolbar)
+        self.backward_button.setObjectName(u"backward_button")
+        self.backward_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        icon6 = QIcon()
+        icon6.addFile(u":/Icons/images/icons/icons8-replay_red.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.backward_button.setIcon(icon6)
+        self.backward_button.setIconSize(QSize(35, 35))
+
+        self.horizontalLayout_12.addWidget(self.backward_button)
+
+        self.play_button = QPushButton(self.audio_player_toolbar)
+        self.play_button.setObjectName(u"play_button")
+        self.play_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        icon7 = QIcon()
+        icon7.addFile(u":/Icons/images/icons/icons8-play_red.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.play_button.setIcon(icon7)
+        self.play_button.setIconSize(QSize(35, 35))
+
+        self.horizontalLayout_12.addWidget(self.play_button)
+
+        self.forward_button = QPushButton(self.audio_player_toolbar)
+        self.forward_button.setObjectName(u"forward_button")
+        self.forward_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        icon8 = QIcon()
+        icon8.addFile(u":/Icons/images/icons/icons8-forward_red.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.forward_button.setIcon(icon8)
+        self.forward_button.setIconSize(QSize(35, 35))
+
+        self.horizontalLayout_12.addWidget(self.forward_button)
+
+        self.audio_player_toolbar_horizontalSpacer_right = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_12.addItem(self.audio_player_toolbar_horizontalSpacer_right)
 
 
         self.verticalLayout_23.addWidget(self.audio_player_toolbar)
@@ -750,7 +795,7 @@ class Ui_Main(object):
         self.ai_chatbox_history_scrollable.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 352, 355))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 352, 346))
         self.verticalLayout_27 = QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_27.setSpacing(5)
         self.verticalLayout_27.setObjectName(u"verticalLayout_27")
@@ -862,9 +907,9 @@ class Ui_Main(object):
         self.ai_chatbox_input_button.setObjectName(u"ai_chatbox_input_button")
         self.ai_chatbox_input_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.ai_chatbox_input_button.setStyleSheet(u"border: none;")
-        icon7 = QIcon()
-        icon7.addFile(u":/Icons/images/icons/icons8-send_gray.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.ai_chatbox_input_button.setIcon(icon7)
+        icon9 = QIcon()
+        icon9.addFile(u":/Icons/images/icons/icons8-send_gray.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.ai_chatbox_input_button.setIcon(icon9)
         self.ai_chatbox_input_button.setIconSize(QSize(20, 20))
 
         self.horizontalLayout_11.addWidget(self.ai_chatbox_input_button)
@@ -1026,10 +1071,13 @@ class Ui_Main(object):
         self.rag_icon.setText("")
         self.rag_label.setText(QCoreApplication.translate("Main", u"RAG", None))
         self.rag_model.setText(QCoreApplication.translate("Main", u"R3", None))
-        self.audio_player_title.setText(QCoreApplication.translate("Main", u"Bob Keating TIMA", None))
-        self.audio_player_desc.setText(QCoreApplication.translate("Main", u"31/01/2025 10:55", None))
-        self.audio_player_play_button.setText("")
+        self.audio_player_title.setText(QCoreApplication.translate("Main", u"Welcome to AudioAI", None))
+        self.audio_player_desc.setText(QCoreApplication.translate("Main", u"no file selected", None))
+        self.audio_player_current_time.setText(QCoreApplication.translate("Main", u"0:00", None))
         self.audio_player_duration.setText(QCoreApplication.translate("Main", u"4:18", None))
+        self.backward_button.setText("")
+        self.play_button.setText("")
+        self.forward_button.setText("")
         self.ai_chatbox_human1_label.setText(QCoreApplication.translate("Main", u"List all Past Medical History of Bob!", None))
         self.ai_chatbox_ai1_label.setText(QCoreApplication.translate("Main", u"asdasdasd\n"
 "sdasdasd\n"

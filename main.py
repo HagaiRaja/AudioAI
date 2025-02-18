@@ -2,14 +2,15 @@
 import sys, os, time
 
 from PySide6.QtWidgets import QApplication, QWidget, QFileDialog, QVBoxLayout, QFrame, QLabel, QSpacerItem, QSizePolicy
-from PySide6.QtGui import (QFont, QCursor)
-from PySide6.QtCore import (Qt, QRect, QSize, QCoreApplication)
+from PySide6.QtGui import (QFont, QCursor, QIcon)
+from PySide6.QtCore import (Qt, QRect, QSize, QCoreApplication, QTimer)
 
 # Important:
 # You need to run the following command to generate the ui_form.py file
 #     pyside6-uic form.ui -o ui_form.py, or
 #     pyside2-uic form.ui -o ui_form.py
 from ui_form import Ui_Main
+from audio_player import AudioPlayer
 
 class Main(QWidget):
     def __init__(self, parent=None):
@@ -20,7 +21,29 @@ class Main(QWidget):
         self.root_dir = "./sounds/"
         self.recordings = []
         self.load_files()
+        self.audio_player = AudioPlayer()
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.update_progress)
+
+        # UI related
         self.ui.menu_settings_button.clicked.connect(self.selectDirectoryDialog)
+        self.ui.play_button.clicked.connect(self.toggle_play_pause)
+        self.ui.audio_player_slider.sliderReleased.connect(self.seek_audio)
+        self.ui.audio_player_slider.setMinimum(0)
+        self.ui.forward_button.clicked.connect(lambda: self.shift_audio(10))
+        self.ui.backward_button.clicked.connect(lambda: self.shift_audio(-10))
+    
+    def shift_audio(self, seconds=10):
+        new_time = self.audio_player.current_time + seconds
+        if new_time < 0:
+            new_time = 0
+        elif new_time > self.audio_player.duration_seconds:
+            new_time = self.audio_player.duration_seconds
+        self.audio_player.stop()
+        self.audio_player.play(starts=new_time)
+        self.ui.audio_player_current_time.setText(QCoreApplication.translate("Main", self.audio_player.get_current_time_str(), None))
+        self.ui.play_button.setIcon(iconPauseRed)
+        self.timer.start(1000)
 
     def refresh_recordings(self):
         self.ui.recording_container_content = QWidget()
@@ -42,11 +65,46 @@ class Main(QWidget):
                 self.root_dir = selected_directory
                 self.load_files()
 
+    def toggle_play_pause(self):
+        if self.audio_player.is_playing:
+            self.audio_player.pause()
+            self.ui.play_button.setIcon(iconPlayRed)
+            self.timer.stop()
+        else:
+            self.audio_player.resume()
+            self.ui.play_button.setIcon(iconPauseRed)
+            self.timer.start(1000)
+
+    def update_progress(self):
+        if self.audio_player.is_playing:
+            self.audio_player.current_time += 1  # Approximate time tracking
+            self.ui.audio_player_slider.setValue(self.audio_player.current_time)
+            self.ui.audio_player_current_time.setText(QCoreApplication.translate("Main", self.audio_player.get_current_time_str(), None))
+        else:
+            self.timer.stop()
+
+    def seek_audio(self):
+        new_time = self.ui.audio_player_slider.value()
+        self.audio_player.stop()
+        self.audio_player.play(starts=new_time)
+        self.ui.audio_player_current_time.setText(QCoreApplication.translate("Main", self.audio_player.get_current_time_str(), None))
+        self.ui.play_button.setIcon(iconPauseRed)
+        self.timer.start(1000)
+
     def setup_player(self, filepath, created_at):
         print(f"Playing: {filepath} created at {created_at}")
-        # Add your player setup here
         self.ui.audio_player_title.setText(QCoreApplication.translate("Main", filepath, None))
         self.ui.audio_player_desc.setText(QCoreApplication.translate("Main", created_at, None))
+        self.audio_player.open(os.path.join(self.root_dir, filepath))
+        self.ui.audio_player_slider.setMaximum(self.audio_player.duration_seconds)
+        self.ui.audio_player_slider.setValue(0)
+        self.audio_player.current_time = 0
+        self.timer.stop()
+        self.audio_player.play()
+        self.ui.play_button.setIcon(iconPauseRed)
+        self.timer.start(1000)
+        self.ui.audio_player_duration.setText(QCoreApplication.translate("Main", self.audio_player.duration_str, None))
+        self.ui.audio_player_current_time.setText(QCoreApplication.translate("Main", self.audio_player.get_current_time_str(), None))
 
     def load_files(self):
         files = [] # contains pair of (relative path to root_dir, created_at)
@@ -117,5 +175,6 @@ class Main(QWidget):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     widget = Main()
+    from icons import iconPauseRed, iconPlayRed
     widget.show()
     sys.exit(app.exec())
