@@ -1,5 +1,5 @@
 # This Python file uses the following encoding: utf-8
-import sys, os, time
+import sys, os, time, shutil
 import wave
 
 from PySide6.QtWidgets import QApplication, QWidget, QFileDialog, QVBoxLayout, QFrame, QLabel, QSpacerItem, QSizePolicy, QMessageBox
@@ -32,6 +32,7 @@ class Main(QWidget):
         self.ui.forward_button.clicked.connect(lambda: self.shift_audio(10))
         self.ui.backward_button.clicked.connect(lambda: self.shift_audio(-10))
         self.ui.menu_record_button.clicked.connect(self.toggle_recording)
+        self.ui.menu_import_button.clicked.connect(self.import_file)
 
     def _init_audio(self):
         self.root_dir = "./sounds/"
@@ -291,6 +292,16 @@ class Main(QWidget):
 
         self.ui.recording_container_layout.addItem(self.ui.recording_verticalSpacer)
 
+    def import_file(self):
+        options = QFileDialog.Options()
+        file_path, _ = QFileDialog.getOpenFileName(
+            self, "Select Audio File", "", "Audio Files (*.wav *.mp3 *.ogg *.m4a)", options=options)
+        if file_path:
+            filename = os.path.basename(file_path)
+            new_path = os.path.join(self.root_dir, filename)
+            if new_path != file_path:
+                shutil.copy(file_path, new_path)
+            self.load_files()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

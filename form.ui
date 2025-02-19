@@ -171,7 +171,7 @@ font-size: 20pt;</string>
              <number>0</number>
             </property>
             <item>
-             <widget class="QPushButton" name="menu_load_button">
+             <widget class="QPushButton" name="menu_import_button">
               <property name="font">
                <font>
                 <kerning>false</kerning>
@@ -184,7 +184,7 @@ font-size: 20pt;</string>
                <string notr="true">text-align: left; color: #333;</string>
               </property>
               <property name="text">
-               <string> Load</string>
+               <string>Import</string>
               </property>
               <property name="icon">
                <iconset resource="resource.qrc">
