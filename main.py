@@ -1,5 +1,8 @@
 # This Python file uses the following encoding: utf-8
-import sys, os, time, shutil
+import sys
+import os
+import time
+import shutil
 import wave
 
 from PySide6.QtWidgets import QApplication, QWidget, QFileDialog, QVBoxLayout, QFrame, QLabel, QSpacerItem, QSizePolicy, QMessageBox
@@ -13,19 +16,24 @@ from PySide6.QtCore import (Qt, QRect, QSize, QCoreApplication, QTimer)
 from ui_form import Ui_Main
 from audio_player import AudioPlayer
 from audio_recorder import AudioRecorder
+from custom_widget import SelectableLabel
+
 
 class Main(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.ui = Ui_Main()
         self.ui.setupUi(self)
+        self._init_ui()
         self.refresh_recordings()
+        self.refresh_chat()
         self._init_audio()
         self._init_recorder()
-        self._init_ui()
+        self._init_chat()
 
     def _init_ui(self):
-        self.ui.menu_settings_button.clicked.connect(self.selectDirectoryDialog)
+        self.ui.menu_settings_button.clicked.connect(
+            self.selectDirectoryDialog)
         self.ui.play_button.clicked.connect(self.toggle_play_pause)
         self.ui.audio_player_slider.sliderReleased.connect(self.seek_audio)
         self.ui.audio_player_slider.setMinimum(0)
@@ -33,6 +41,7 @@ class Main(QWidget):
         self.ui.backward_button.clicked.connect(lambda: self.shift_audio(-10))
         self.ui.menu_record_button.clicked.connect(self.toggle_recording)
         self.ui.menu_import_button.clicked.connect(self.import_file)
+        self.ui.ai_chatbox_input_button.clicked.connect(self.send_message)
 
     def _init_audio(self):
         self.root_dir = "./sounds/"
@@ -52,6 +61,16 @@ class Main(QWidget):
         self.recorder_timer.timeout.connect(self.update_recorder_progress)
         self.is_show_recorder = False
 
+    def _init_chat(self):
+        self.chat_history = []
+        # when ai_chatbox_input_textarea is pressed with Ctrl/Cmd + Enter, send message and for other just do as usual
+        original_keyPressEvent = self.ui.ai_chatbox_input_textarea.keyPressEvent
+        self.ui.ai_chatbox_input_textarea.keyPressEvent = \
+            lambda event: self.send_message() \
+            if (event.modifiers() & Qt.ControlModifier) \
+            and (event.key() == Qt.Key_Return or event.key() == Qt.Key_Enter) \
+            else original_keyPressEvent(event)
+
     def save_audio(self, audio_data):
         options = QFileDialog.Options()
         timestamp_str = self.recorder.timestamp.strftime("%Y-%m-%d_%H-%M-%S")
@@ -65,7 +84,8 @@ class Main(QWidget):
                 wf.setsampwidth(2)  # 16-bit audio
                 wf.setframerate(44100)
                 wf.writeframes(audio_data.tobytes())
-            QMessageBox.information(self, "Success", f"Audio saved as {file_path}")
+            QMessageBox.information(
+                self, "Success", f"Audio saved as {file_path}")
             self.load_files()
         self.ui.audio_player_duration.setText("00:00")
 
@@ -93,13 +113,15 @@ class Main(QWidget):
             self.ui.audio_player_current_time.hide()
             self.ui.audio_player_duration.setText("00:00")
             self.ui.audio_player_title.setText("Record Audio")
-            self.ui.audio_player_desc.setText("Click button to start/stop recording")
+            self.ui.audio_player_desc.setText(
+                "Click button to start/stop recording")
             self.ui.play_button.setIcon(iconRecordDotGray)
             self.ui.menu_record_button.setIcon(iconRecordRed)
         self.is_show_recorder = not self.is_show_recorder
-    
+
     def shift_audio(self, seconds=10):
-        if not self.is_audio_selected: return
+        if not self.is_audio_selected:
+            return
         new_time = self.audio_player.current_time + seconds
         if new_time < 0:
             new_time = 0
@@ -108,7 +130,8 @@ class Main(QWidget):
         prev_state = self.audio_player.is_playing
         self.audio_player.stop()
         self.audio_player.play(starts=new_time)
-        self.ui.audio_player_current_time.setText(QCoreApplication.translate("Main", self.audio_player.get_current_time_str(), None))
+        self.ui.audio_player_current_time.setText(QCoreApplication.translate(
+            "Main", self.audio_player.get_current_time_str(), None))
         if prev_state:
             self.ui.play_button.setIcon(iconPauseRed)
             self.audio_timer.start(1000)
@@ -120,11 +143,86 @@ class Main(QWidget):
 
     def refresh_recordings(self):
         self.ui.recording_container_content = QWidget()
-        self.ui.recording_container_content.setObjectName(u"recording_container_content")
+        self.ui.recording_container_content.setObjectName(
+            u"recording_container_content")
         self.ui.recording_container_content.setGeometry(QRect(0, 0, 174, 397))
-        self.ui.recording_container_layout = QVBoxLayout(self.ui.recording_container_content)
-        self.ui.recording_container_layout.setObjectName(u"recording_container_layout")
-        self.ui.recording_container_scrollArea.setWidget(self.ui.recording_container_content)
+        self.ui.recording_container_layout = QVBoxLayout(
+            self.ui.recording_container_content)
+        self.ui.recording_container_layout.setObjectName(
+            u"recording_container_layout")
+        self.ui.recording_container_scrollArea.setWidget(
+            self.ui.recording_container_content)
+
+    def refresh_chat(self):
+        self.ui.ai_chatbox_history_content = QWidget()
+        self.ui.ai_chatbox_history_content.setObjectName(
+            u"ai_chatbox_history_content")
+        self.ui.ai_chatbox_history_content.setGeometry(QRect(0, 0, 174, 397))
+        self.ui.ai_chatbox_history_layout = QVBoxLayout(
+            self.ui.ai_chatbox_history_content)
+        self.ui.ai_chatbox_history_layout.setObjectName(
+            u"ai_chatbox_history_layout")
+        self.ui.ai_chatbox_history_layout.setContentsMargins(0, 12, 0, 0)
+        self.ui.ai_chatbox_history_layout.setSpacing(5)
+        self.ui.ai_chatbox_history_scrollArea.setWidget(
+            self.ui.ai_chatbox_history_content)
+        self.ui.ai_chatbox_verticalSpacer = QSpacerItem(
+            20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.ui.ai_chatbox_history_layout.addItem(
+            self.ui.ai_chatbox_verticalSpacer)
+
+    def send_message(self):
+        # Get the user's message
+        user_message = self.ui.ai_chatbox_input_textarea.toPlainText().strip()
+        if not user_message:
+            return  # Do nothing if the message is empty
+
+        # Add the user's message to the chat history
+        human_label = QFrame()
+        human_label.setObjectName(f"ai_chatbox_human_{len(self.chat_history)}")
+        human_label.setStyleSheet(
+            u"background-color: #575757;\nborder-radius: 10px;")
+        human_label.setFrameShape(QFrame.StyledPanel)
+        human_label.setFrameShadow(QFrame.Raised)
+        human_label_layout = QVBoxLayout(human_label)
+        human_label_layout.setObjectName(
+            f"ai_chatbox_human_verticalLayout_{len(self.chat_history)}")
+        human_label_content = SelectableLabel(user_message, human_label)
+        human_label_content.setObjectName(
+            f"ai_chatbox_human{len(self.chat_history)}_label")
+        human_label_content.setStyleSheet(u"color: #FFF;")
+        human_label_content.setAlignment(
+            Qt.AlignRight | Qt.AlignTrailing | Qt.AlignVCenter)
+        human_label_layout.addWidget(human_label_content)
+        self.ui.ai_chatbox_history_layout.addWidget(human_label)
+        self.chat_history.append(("human", user_message))
+
+        # Add the bot's reply to the chat history
+        bot_reply = f"You said: '{user_message}'?"
+        bot_label = QFrame()
+        bot_label.setObjectName(f"ai_chatbox_bot_{len(self.chat_history)}")
+        bot_label.setStyleSheet(
+            u"background-color: #868686;\nborder-radius: 10px;")
+        bot_label.setFrameShape(QFrame.StyledPanel)
+        bot_label.setFrameShadow(QFrame.Raised)
+        bot_label_layout = QVBoxLayout(bot_label)
+        bot_label_layout.setObjectName(
+            f"ai_chatbox_bot_verticalLayout_{len(self.chat_history)}")
+        bot_label_content = SelectableLabel(bot_reply, bot_label)
+        bot_label_content.setObjectName(
+            f"ai_chatbox_bot{len(self.chat_history)}_label")
+        bot_label_content.setStyleSheet(u"color: #FFF;")
+        bot_label_layout.addWidget(bot_label_content)
+        self.ui.ai_chatbox_history_layout.addWidget(bot_label)
+        self.chat_history.append(("bot", bot_reply))
+
+        # Clear the input area
+        self.ui.ai_chatbox_input_textarea.clear()
+
+        # Scroll to the bottom of the chat history
+        self.ui.ai_chatbox_history_scrollArea.verticalScrollBar().setValue(
+            self.ui.ai_chatbox_history_scrollArea.verticalScrollBar().maximum()
+        )
 
     def selectDirectoryDialog(self):
         file_dialog = QFileDialog(self)
@@ -149,7 +247,8 @@ class Main(QWidget):
                 self.recorder_timer.start(1000)
                 self.ui.play_button.setIcon(iconRecordDotRed)
         else:
-            if not self.is_audio_selected: return
+            if not self.is_audio_selected:
+                return
             if self.audio_player.is_playing:
                 self.audio_player.pause()
                 self.ui.play_button.setIcon(iconPlayRed)
@@ -172,8 +271,10 @@ class Main(QWidget):
                 self.audio_timer.stop()
                 self.ui.play_button.setIcon(iconPlayRed)
                 return
-            self.ui.audio_player_slider.setValue(self.audio_player.current_time)
-            self.ui.audio_player_current_time.setText(QCoreApplication.translate("Main", self.audio_player.get_current_time_str(), None))
+            self.ui.audio_player_slider.setValue(
+                self.audio_player.current_time)
+            self.ui.audio_player_current_time.setText(QCoreApplication.translate(
+                "Main", self.audio_player.get_current_time_str(), None))
         else:
             self.audio_timer.stop()
 
@@ -181,19 +282,20 @@ class Main(QWidget):
         # get the diff between current time and recorder timestamp
         diff = int((time.time() - self.recorder.timestamp.timestamp()))
         self.ui.audio_player_duration.setText(f"{diff//60:02}:{diff%60:02}")
-    
+
     def seek_audio(self):
         new_time = self.ui.audio_player_slider.value()
         self.audio_player.stop()
         self.audio_player.play(starts=new_time)
-        self.ui.audio_player_current_time.setText(QCoreApplication.translate("Main", self.audio_player.get_current_time_str(), None))
+        self.ui.audio_player_current_time.setText(QCoreApplication.translate(
+            "Main", self.audio_player.get_current_time_str(), None))
         self.ui.play_button.setIcon(iconPauseRed)
         self.audio_timer.start(1000)
 
     def refresh_ui_player(self):
         if self.is_audio_selected:
             self.ui.audio_player_duration.setText(
-                QCoreApplication.translate("Main",self.audio_player.duration_str, None))
+                QCoreApplication.translate("Main", self.audio_player.duration_str, None))
             self.ui.audio_player_current_time.setText(
                 QCoreApplication.translate("Main", self.audio_player.get_current_time_str(), None))
             if self.audio_player.is_playing:
@@ -214,10 +316,13 @@ class Main(QWidget):
         if self.is_show_recorder:
             self.toggle_recording()
         print(f"Playing: {filepath} created at {created_at}")
-        self.ui.audio_player_title.setText(QCoreApplication.translate("Main", filepath, None))
-        self.ui.audio_player_desc.setText(QCoreApplication.translate("Main", created_at, None))
+        self.ui.audio_player_title.setText(
+            QCoreApplication.translate("Main", filepath, None))
+        self.ui.audio_player_desc.setText(
+            QCoreApplication.translate("Main", created_at, None))
         self.audio_player.open(os.path.join(self.root_dir, filepath))
-        self.ui.audio_player_slider.setMaximum(self.audio_player.duration_seconds)
+        self.ui.audio_player_slider.setMaximum(
+            self.audio_player.duration_seconds)
         self.audio_player.current_time = 0
         self.audio_timer.stop()
         self.audio_player.play()
@@ -227,22 +332,26 @@ class Main(QWidget):
         self.refresh_ui_player()
 
     def load_files(self):
-        files = [] # contains pair of (relative path to root_dir, created_at)
+        files = []  # contains pair of (relative path to root_dir, created_at)
         for root, _, filenames in os.walk(self.root_dir):
             for filename in filenames:
                 # only include audio files
-                if not filename.endswith((".wav", ".mp3", ".ogg", ".m4a")): continue
-                if "converted" in filename: continue
-                filepath = os.path.relpath(os.path.join(root, filename), self.root_dir)
+                if not filename.endswith((".wav", ".mp3", ".ogg", ".m4a")):
+                    continue
+                if "converted" in filename:
+                    continue
+                filepath = os.path.relpath(
+                    os.path.join(root, filename), self.root_dir)
                 created_at = os.path.getctime(os.path.join(root, filename))
                 # convert created_at to human readable format e.g. Mon, 2021-09-01 12:00
-                created_at = time.strftime("%a, %Y-%m-%d %H:%M", time.localtime(created_at))
+                created_at = time.strftime(
+                    "%a, %Y-%m-%d %H:%M", time.localtime(created_at))
                 files.append((filepath, created_at))
                 print(files[-1])
-        
+
         # sort files by created_at from newest to oldest
         files.sort(key=lambda x: x[1], reverse=True)
-        
+
         # render files to list widget
         self.refresh_recordings()
         for id, file in enumerate(files):
@@ -251,8 +360,10 @@ class Main(QWidget):
             recording_frame = QFrame()
             recording_frame.setObjectName(f"recording{id}_frame")
             recording_frame.setMaximumSize(QSize(16777215, 70))
-            recording_frame.setStyleSheet(u"QFrame:hover {background-color:#FFC9C9}")
-            recording_frame.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+            recording_frame.setStyleSheet(
+                u"QFrame:hover {background-color:#FFC9C9}")
+            recording_frame.setCursor(
+                QCursor(Qt.CursorShape.PointingHandCursor))
             recording_frame.setFrameShape(QFrame.StyledPanel)
             recording_frame.setFrameShadow(QFrame.Raised)
             verticalLayout = QVBoxLayout(recording_frame)
@@ -260,9 +371,10 @@ class Main(QWidget):
             verticalLayout.setObjectName(f"verticalLayout_{id}")
             verticalLayout.setContentsMargins(5, 0, 0, 0)
             # if recording_frame is clicked, setup the player
-            recording_frame.mousePressEvent = lambda event, fp=filepath, ca=created_at: self.setup_player(fp, ca)
+            recording_frame.mousePressEvent = lambda event, fp=filepath, ca=created_at: self.setup_player(
+                fp, ca)
 
-            recording_title = QLabel(recording_frame)
+            recording_title = SelectableLabel(filepath, recording_frame)
             recording_title.setObjectName(f"recording{id}_title")
             font2 = QFont()
             font2.setFamilies([u"Poppins"])
@@ -271,26 +383,26 @@ class Main(QWidget):
             recording_title.setStyleSheet(u"QLabel {color: #333;"
                                           "background-color:transparent;}")
             verticalLayout.addWidget(recording_title)
-            recording_title.setText(QCoreApplication.translate("Main", filepath, None))
 
-            recording_datetime = QLabel(recording_frame)
+            recording_datetime = SelectableLabel(created_at, recording_frame)
             recording_datetime.setObjectName(f"recording{id}_datetime")
             font3 = QFont()
             font3.setFamilies([u"Poppins"])
             font3.setItalic(False)
             recording_datetime.setFont(font3)
             recording_datetime.setStyleSheet(u"QLabel {color: #858585;"
-                                          "background-color:transparent;}")
+                                             "background-color:transparent;}")
             verticalLayout.addWidget(recording_datetime)
-            recording_datetime.setText(QCoreApplication.translate("Main", created_at, None))
 
             # Add to layout and storage
             self.ui.recording_container_layout.addWidget(recording_frame)
             self.recordings.append(recording_frame)
 
-        self.ui.recording_verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.ui.recording_verticalSpacer = QSpacerItem(
+            20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
-        self.ui.recording_container_layout.addItem(self.ui.recording_verticalSpacer)
+        self.ui.recording_container_layout.addItem(
+            self.ui.recording_verticalSpacer)
 
     def import_file(self):
         options = QFileDialog.Options()
@@ -302,6 +414,7 @@ class Main(QWidget):
             if new_path != file_path:
                 shutil.copy(file_path, new_path)
             self.load_files()
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

@@ -803,13 +803,13 @@ class Ui_Main(object):
         self.verticalLayout_26 = QVBoxLayout(self.ai_chatbox_history_container)
         self.verticalLayout_26.setSpacing(0)
         self.verticalLayout_26.setObjectName(u"verticalLayout_26")
-        self.verticalLayout_26.setContentsMargins(12, 0, 12, 12)
-        self.ai_chatbox_history_scrollable = QScrollArea(self.ai_chatbox_history_container)
-        self.ai_chatbox_history_scrollable.setObjectName(u"ai_chatbox_history_scrollable")
-        self.ai_chatbox_history_scrollable.setWidgetResizable(True)
+        self.verticalLayout_26.setContentsMargins(12, 12, 12, 12)
+        self.ai_chatbox_history_scrollArea = QScrollArea(self.ai_chatbox_history_container)
+        self.ai_chatbox_history_scrollArea.setObjectName(u"ai_chatbox_history_scrollArea")
+        self.ai_chatbox_history_scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 352, 342))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 352, 330))
         self.verticalLayout_27 = QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_27.setSpacing(5)
         self.verticalLayout_27.setObjectName(u"verticalLayout_27")
@@ -836,22 +836,22 @@ class Ui_Main(object):
 
         self.verticalLayout_27.addWidget(self.ai_chatbox_human1)
 
-        self.ai_chatbox_ai1 = QFrame(self.scrollAreaWidgetContents)
-        self.ai_chatbox_ai1.setObjectName(u"ai_chatbox_ai1")
-        self.ai_chatbox_ai1.setStyleSheet(u"background-color: #868686;\n"
+        self.ai_chatbox_bot1 = QFrame(self.scrollAreaWidgetContents)
+        self.ai_chatbox_bot1.setObjectName(u"ai_chatbox_bot1")
+        self.ai_chatbox_bot1.setStyleSheet(u"background-color: #868686;\n"
 "border-radius: 10px;")
-        self.ai_chatbox_ai1.setFrameShape(QFrame.StyledPanel)
-        self.ai_chatbox_ai1.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_30 = QVBoxLayout(self.ai_chatbox_ai1)
+        self.ai_chatbox_bot1.setFrameShape(QFrame.StyledPanel)
+        self.ai_chatbox_bot1.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_30 = QVBoxLayout(self.ai_chatbox_bot1)
         self.verticalLayout_30.setObjectName(u"verticalLayout_30")
-        self.ai_chatbox_ai1_label = QLabel(self.ai_chatbox_ai1)
-        self.ai_chatbox_ai1_label.setObjectName(u"ai_chatbox_ai1_label")
-        self.ai_chatbox_ai1_label.setStyleSheet(u"color: #FFF;")
+        self.ai_chatbox_bot1_label = QLabel(self.ai_chatbox_bot1)
+        self.ai_chatbox_bot1_label.setObjectName(u"ai_chatbox_bot1_label")
+        self.ai_chatbox_bot1_label.setStyleSheet(u"color: #FFF;")
 
-        self.verticalLayout_30.addWidget(self.ai_chatbox_ai1_label)
+        self.verticalLayout_30.addWidget(self.ai_chatbox_bot1_label)
 
 
-        self.verticalLayout_27.addWidget(self.ai_chatbox_ai1)
+        self.verticalLayout_27.addWidget(self.ai_chatbox_bot1)
 
         self.ai_chatbox_human2 = QFrame(self.scrollAreaWidgetContents)
         self.ai_chatbox_human2.setObjectName(u"ai_chatbox_human2")
@@ -871,26 +871,26 @@ class Ui_Main(object):
 
         self.verticalLayout_27.addWidget(self.ai_chatbox_human2)
 
-        self.ai_chatbox_ai2 = QFrame(self.scrollAreaWidgetContents)
-        self.ai_chatbox_ai2.setObjectName(u"ai_chatbox_ai2")
-        self.ai_chatbox_ai2.setStyleSheet(u"background-color: #868686;\n"
+        self.ai_chatbox_bot2 = QFrame(self.scrollAreaWidgetContents)
+        self.ai_chatbox_bot2.setObjectName(u"ai_chatbox_bot2")
+        self.ai_chatbox_bot2.setStyleSheet(u"background-color: #868686;\n"
 "border-radius: 10px;")
-        self.ai_chatbox_ai2.setFrameShape(QFrame.StyledPanel)
-        self.ai_chatbox_ai2.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_28 = QVBoxLayout(self.ai_chatbox_ai2)
+        self.ai_chatbox_bot2.setFrameShape(QFrame.StyledPanel)
+        self.ai_chatbox_bot2.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_28 = QVBoxLayout(self.ai_chatbox_bot2)
         self.verticalLayout_28.setObjectName(u"verticalLayout_28")
-        self.ai_chatbox_ai2_label = QLabel(self.ai_chatbox_ai2)
-        self.ai_chatbox_ai2_label.setObjectName(u"ai_chatbox_ai2_label")
-        self.ai_chatbox_ai2_label.setStyleSheet(u"color: #FFF;")
+        self.ai_chatbox_bot2_label = QLabel(self.ai_chatbox_bot2)
+        self.ai_chatbox_bot2_label.setObjectName(u"ai_chatbox_bot2_label")
+        self.ai_chatbox_bot2_label.setStyleSheet(u"color: #FFF;")
 
-        self.verticalLayout_28.addWidget(self.ai_chatbox_ai2_label)
+        self.verticalLayout_28.addWidget(self.ai_chatbox_bot2_label)
 
 
-        self.verticalLayout_27.addWidget(self.ai_chatbox_ai2)
+        self.verticalLayout_27.addWidget(self.ai_chatbox_bot2)
 
-        self.ai_chatbox_history_scrollable.setWidget(self.scrollAreaWidgetContents)
+        self.ai_chatbox_history_scrollArea.setWidget(self.scrollAreaWidgetContents)
 
-        self.verticalLayout_26.addWidget(self.ai_chatbox_history_scrollable)
+        self.verticalLayout_26.addWidget(self.ai_chatbox_history_scrollArea)
 
 
         self.verticalLayout_25.addWidget(self.ai_chatbox_history_container)
@@ -1093,11 +1093,11 @@ class Ui_Main(object):
         self.play_button.setText("")
         self.forward_button.setText("")
         self.ai_chatbox_human1_label.setText(QCoreApplication.translate("Main", u"List all Past Medical History of Bob!", None))
-        self.ai_chatbox_ai1_label.setText(QCoreApplication.translate("Main", u"asdasdasd\n"
+        self.ai_chatbox_bot1_label.setText(QCoreApplication.translate("Main", u"asdasdasd\n"
 "sdasdasd\n"
 "asdasdasd", None))
         self.ai_chatbox_human2_label.setText(QCoreApplication.translate("Main", u"List all Past Medical History of Bob!", None))
-        self.ai_chatbox_ai2_label.setText(QCoreApplication.translate("Main", u"asdasdasd\n"
+        self.ai_chatbox_bot2_label.setText(QCoreApplication.translate("Main", u"asdasdasd\n"
 "sdasdasd\n"
 "asdasdasd", None))
         self.ai_chatbox_input_textarea.setPlaceholderText(QCoreApplication.translate("Main", u"Ask anything about the audio content...", None))
