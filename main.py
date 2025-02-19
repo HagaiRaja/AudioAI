@@ -193,6 +193,7 @@ class Main(QWidget):
         human_label_content.setStyleSheet(u"color: #FFF;")
         human_label_content.setAlignment(
             Qt.AlignRight | Qt.AlignTrailing | Qt.AlignVCenter)
+        human_label_content.setWordWrap(True)
         human_label_layout.addWidget(human_label_content)
         self.ui.ai_chatbox_history_layout.addWidget(human_label)
         self.chat_history.append(("human", user_message))
@@ -212,6 +213,7 @@ class Main(QWidget):
         bot_label_content.setObjectName(
             f"ai_chatbox_bot{len(self.chat_history)}_label")
         bot_label_content.setStyleSheet(u"color: #FFF;")
+        bot_label_content.setWordWrap(True)
         bot_label_layout.addWidget(bot_label_content)
         self.ui.ai_chatbox_history_layout.addWidget(bot_label)
         self.chat_history.append(("bot", bot_reply))
@@ -220,9 +222,9 @@ class Main(QWidget):
         self.ui.ai_chatbox_input_textarea.clear()
 
         # Scroll to the bottom of the chat history
-        self.ui.ai_chatbox_history_scrollArea.verticalScrollBar().setValue(
+        QTimer.singleShot(100, lambda: self.ui.ai_chatbox_history_scrollArea.verticalScrollBar().setValue(
             self.ui.ai_chatbox_history_scrollArea.verticalScrollBar().maximum()
-        )
+        ))
 
     def selectDirectoryDialog(self):
         file_dialog = QFileDialog(self)
