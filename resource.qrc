@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="Icons">
+    <file>images/icons/icons8-record-dot_gray.png</file>
+    <file>images/icons/icons8-record-dot_red.png</file>
     <file>images/icons/icons8-play_gray.png</file>
     <file>images/icons/icons8-forward_gray.png</file>
     <file>images/icons/icons8-forward_red.png</file>

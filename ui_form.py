@@ -677,6 +677,10 @@ class Ui_Main(object):
         self.horizontalLayout_10.setSpacing(5)
         self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
         self.horizontalLayout_10.setContentsMargins(-1, 0, -1, 0)
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_10.addItem(self.horizontalSpacer)
+
         self.audio_player_current_time = QLabel(self.audio_player_progress)
         self.audio_player_current_time.setObjectName(u"audio_player_current_time")
         self.audio_player_current_time.setStyleSheet(u"color: #000;")
@@ -685,6 +689,12 @@ class Ui_Main(object):
 
         self.audio_player_slider = QSlider(self.audio_player_progress)
         self.audio_player_slider.setObjectName(u"audio_player_slider")
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.audio_player_slider.sizePolicy().hasHeightForWidth())
+        self.audio_player_slider.setSizePolicy(sizePolicy)
+        self.audio_player_slider.setMinimumSize(QSize(270, 0))
         self.audio_player_slider.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.audio_player_slider.setStyleSheet(u"QSlider::groove:horizontal {\n"
 "                border: 1px solid #333;\n"
@@ -717,6 +727,10 @@ class Ui_Main(object):
 
         self.horizontalLayout_10.addWidget(self.audio_player_duration)
 
+        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_10.addItem(self.horizontalSpacer_2)
+
 
         self.verticalLayout_23.addWidget(self.audio_player_progress)
 
@@ -736,7 +750,7 @@ class Ui_Main(object):
         self.backward_button.setObjectName(u"backward_button")
         self.backward_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         icon6 = QIcon()
-        icon6.addFile(u":/Icons/images/icons/icons8-replay_red.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon6.addFile(u":/Icons/images/icons/icons8-replay_gray.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.backward_button.setIcon(icon6)
         self.backward_button.setIconSize(QSize(35, 35))
 
@@ -746,7 +760,7 @@ class Ui_Main(object):
         self.play_button.setObjectName(u"play_button")
         self.play_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         icon7 = QIcon()
-        icon7.addFile(u":/Icons/images/icons/icons8-play_red.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon7.addFile(u":/Icons/images/icons/icons8-play_gray.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.play_button.setIcon(icon7)
         self.play_button.setIconSize(QSize(35, 35))
 
@@ -756,7 +770,7 @@ class Ui_Main(object):
         self.forward_button.setObjectName(u"forward_button")
         self.forward_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         icon8 = QIcon()
-        icon8.addFile(u":/Icons/images/icons/icons8-forward_red.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon8.addFile(u":/Icons/images/icons/icons8-forward_gray.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.forward_button.setIcon(icon8)
         self.forward_button.setIconSize(QSize(35, 35))
 
@@ -795,7 +809,7 @@ class Ui_Main(object):
         self.ai_chatbox_history_scrollable.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 352, 346))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 352, 342))
         self.verticalLayout_27 = QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_27.setSpacing(5)
         self.verticalLayout_27.setObjectName(u"verticalLayout_27")
@@ -1074,7 +1088,7 @@ class Ui_Main(object):
         self.audio_player_title.setText(QCoreApplication.translate("Main", u"Welcome to AudioAI", None))
         self.audio_player_desc.setText(QCoreApplication.translate("Main", u"no file selected", None))
         self.audio_player_current_time.setText(QCoreApplication.translate("Main", u"0:00", None))
-        self.audio_player_duration.setText(QCoreApplication.translate("Main", u"4:18", None))
+        self.audio_player_duration.setText(QCoreApplication.translate("Main", u"0:00", None))
         self.backward_button.setText("")
         self.play_button.setText("")
         self.forward_button.setText("")

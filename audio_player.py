@@ -1,5 +1,7 @@
+import time, os
 import pygame
-import time
+
+from audio_util import convert_audio
 
 class AudioPlayer():
     def __init__(self, file_path=None):
@@ -14,7 +16,13 @@ class AudioPlayer():
 
     def open(self, file_path):
         """Opens a new audio file."""
-        self.file_path = file_path
+        if file_path.endswith(".m4a"):
+            output_file = file_path.replace(".m4a", "_converted.mp3")
+            if not os.path.exists(output_file):
+                convert_audio(file_path, output_file)
+            self.file_path = output_file
+        else:
+            self.file_path = file_path
         pygame.mixer.music.load(self.file_path)
         self.sound = pygame.mixer.Sound(self.file_path)
         self.duration_str, self.duration_seconds = self.get_duration()

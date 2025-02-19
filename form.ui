@@ -1517,6 +1517,19 @@ border-radius: 10px;</string>
              <number>0</number>
             </property>
             <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
              <widget class="QLabel" name="audio_player_current_time">
               <property name="styleSheet">
                <string notr="true">color: #000;</string>
@@ -1528,6 +1541,18 @@ border-radius: 10px;</string>
             </item>
             <item>
              <widget class="QSlider" name="audio_player_slider">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>270</width>
+                <height>0</height>
+               </size>
+              </property>
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -1565,9 +1590,22 @@ border-radius: 10px;</string>
                <string notr="true">color: #000;</string>
               </property>
               <property name="text">
-               <string>4:18</string>
+               <string>0:00</string>
               </property>
              </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
             </item>
            </layout>
           </widget>
@@ -1619,7 +1657,7 @@ border-radius: 10px;</string>
               </property>
               <property name="icon">
                <iconset resource="resource.qrc">
-                <normaloff>:/Icons/images/icons/icons8-replay_red.png</normaloff>:/Icons/images/icons/icons8-replay_red.png</iconset>
+                <normaloff>:/Icons/images/icons/icons8-replay_gray.png</normaloff>:/Icons/images/icons/icons8-replay_gray.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -1639,7 +1677,7 @@ border-radius: 10px;</string>
               </property>
               <property name="icon">
                <iconset resource="resource.qrc">
-                <normaloff>:/Icons/images/icons/icons8-play_red.png</normaloff>:/Icons/images/icons/icons8-play_red.png</iconset>
+                <normaloff>:/Icons/images/icons/icons8-play_gray.png</normaloff>:/Icons/images/icons/icons8-play_gray.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -1659,7 +1697,7 @@ border-radius: 10px;</string>
               </property>
               <property name="icon">
                <iconset resource="resource.qrc">
-                <normaloff>:/Icons/images/icons/icons8-forward_red.png</normaloff>:/Icons/images/icons/icons8-forward_red.png</iconset>
+                <normaloff>:/Icons/images/icons/icons8-forward_gray.png</normaloff>:/Icons/images/icons/icons8-forward_gray.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -1751,7 +1789,7 @@ border-radius: 15px</string>
                  <x>0</x>
                  <y>0</y>
                  <width>352</width>
-                 <height>346</height>
+                 <height>342</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_27">
