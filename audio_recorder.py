@@ -10,7 +10,7 @@ from PySide6.QtCore import QThread, Signal
 class AudioRecorder(QThread):
     data_collected = Signal(np.ndarray)
 
-    def __init__(self, sample_rate=44100, channels=2):
+    def __init__(self, sample_rate=44100, channels=1):
         super().__init__()
         self.sample_rate = sample_rate
         self.channels = channels

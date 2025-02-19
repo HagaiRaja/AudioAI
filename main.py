@@ -80,7 +80,7 @@ class Main(QWidget):
             self, "Save Audio File", default_path, "WAV Files (*.wav)", options=options)
         if file_path:
             with wave.open(file_path, 'wb') as wf:
-                wf.setnchannels(2)
+                wf.setnchannels(1)
                 wf.setsampwidth(2)  # 16-bit audio
                 wf.setframerate(44100)
                 wf.writeframes(audio_data.tobytes())
