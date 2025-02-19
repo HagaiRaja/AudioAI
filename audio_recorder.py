@@ -1,9 +1,11 @@
-import sys, datetime
+import sys
+import datetime
 import sounddevice as sd
 import numpy as np
 import wave
 from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QFileDialog, QMessageBox
 from PySide6.QtCore import QThread, Signal
+
 
 class AudioRecorder(QThread):
     data_collected = Signal(np.ndarray)
@@ -33,7 +35,9 @@ class AudioRecorder(QThread):
         self.is_recording = False
         self.wait()  # Wait for thread to finish
         if self.audio_data:
-            self.data_collected.emit(np.concatenate(self.audio_data, axis=0))  # Send data to main thread
+            self.data_collected.emit(np.concatenate(
+                self.audio_data, axis=0))  # Send data to main thread
+
 
 class AudioRecorderApp(QWidget):
     def __init__(self):
@@ -63,14 +67,17 @@ class AudioRecorderApp(QWidget):
 
     def save_audio(self, audio_data):
         options = QFileDialog.Options()
-        file_path, _ = QFileDialog.getSaveFileName(self, "Save Audio File", "", "WAV Files (*.wav)", options=options)
+        file_path, _ = QFileDialog.getSaveFileName(
+            self, "Save Audio File", "", "WAV Files (*.wav)", options=options)
         if file_path:
             with wave.open(file_path, 'wb') as wf:
                 wf.setnchannels(2)
                 wf.setsampwidth(2)  # 16-bit audio
                 wf.setframerate(44100)
                 wf.writeframes(audio_data.tobytes())
-            QMessageBox.information(self, "Success", f"Audio saved as {file_path}")
+            QMessageBox.information(
+                self, "Success", f"Audio saved as {file_path}")
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
