@@ -376,7 +376,7 @@ class Main(QWidget):
             recording_frame.mousePressEvent = lambda event, fp=filepath, ca=created_at: self.setup_player(
                 fp, ca)
 
-            recording_title = SelectableLabel(filepath, recording_frame)
+            recording_title = QLabel(recording_frame)
             recording_title.setObjectName(f"recording{id}_title")
             font2 = QFont()
             font2.setFamilies([u"Poppins"])
@@ -384,9 +384,11 @@ class Main(QWidget):
             recording_title.setFont(font2)
             recording_title.setStyleSheet(u"QLabel {color: #333;"
                                           "background-color:transparent;}")
+            recording_title.setText(QCoreApplication.translate(
+                "Main", filepath, None))
             verticalLayout.addWidget(recording_title)
 
-            recording_datetime = SelectableLabel(created_at, recording_frame)
+            recording_datetime = QLabel(recording_frame)
             recording_datetime.setObjectName(f"recording{id}_datetime")
             font3 = QFont()
             font3.setFamilies([u"Poppins"])
@@ -394,6 +396,8 @@ class Main(QWidget):
             recording_datetime.setFont(font3)
             recording_datetime.setStyleSheet(u"QLabel {color: #858585;"
                                              "background-color:transparent;}")
+            recording_datetime.setText(QCoreApplication.translate(
+                "Main", created_at, None))
             verticalLayout.addWidget(recording_datetime)
 
             # Add to layout and storage
