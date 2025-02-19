@@ -1,4 +1,4 @@
-import sys
+import sys, datetime
 import sounddevice as sd
 import numpy as np
 import wave
@@ -14,9 +14,11 @@ class AudioRecorder(QThread):
         self.channels = channels
         self.is_recording = False
         self.audio_data = []
+        self.timestamp = "None"
 
     def run(self):
         self.is_recording = True
+        self.timestamp = datetime.datetime.now()
         self.audio_data = []
         with sd.InputStream(samplerate=self.sample_rate, channels=self.channels, dtype=np.int16, callback=self.callback):
             while self.is_recording:

@@ -20,20 +20,11 @@ class Main(QWidget):
         self.ui = Ui_Main()
         self.ui.setupUi(self)
         self.refresh_recordings()
-        # Audio related
-        self.root_dir = "./sounds/"
-        self.recordings = []
-        self.load_files()
-        self.audio_player = AudioPlayer()
-        self.timer = QTimer()
-        self.timer.timeout.connect(self.update_progress)
-        self.is_audio_selected = False
-        # Recorder related
-        self.recorder = AudioRecorder()
-        self.recorder.data_collected.connect(self.save_audio)
-        self.is_show_recorder = False
+        self._init_audio()
+        self._init_recorder()
+        self._init_ui()
 
-        # UI related
+    def _init_ui(self):
         self.ui.menu_settings_button.clicked.connect(self.selectDirectoryDialog)
         self.ui.play_button.clicked.connect(self.toggle_play_pause)
         self.ui.audio_player_slider.sliderReleased.connect(self.seek_audio)
@@ -42,10 +33,31 @@ class Main(QWidget):
         self.ui.backward_button.clicked.connect(lambda: self.shift_audio(-10))
         self.ui.menu_record_button.clicked.connect(self.toggle_recording)
 
+    def _init_audio(self):
+        self.root_dir = "./sounds/"
+        if not os.path.exists(self.root_dir):
+            os.makedirs(self.root_dir)
+        self.recordings = []
+        self.load_files()
+        self.audio_player = AudioPlayer()
+        self.audio_timer = QTimer()
+        self.audio_timer.timeout.connect(self.update_audio_progress)
+        self.is_audio_selected = False
+
+    def _init_recorder(self):
+        self.recorder = AudioRecorder()
+        self.recorder.data_collected.connect(self.save_audio)
+        self.recorder_timer = QTimer()
+        self.recorder_timer.timeout.connect(self.update_recorder_progress)
+        self.is_show_recorder = False
+
     def save_audio(self, audio_data):
         options = QFileDialog.Options()
+        timestamp_str = self.recorder.timestamp.strftime("%Y-%m-%d_%H-%M-%S")
+        default_filename = f"recording_{timestamp_str}.wav"
+        default_path = os.path.join(self.root_dir, default_filename)
         file_path, _ = QFileDialog.getSaveFileName(
-            self, "Save Audio File", self.root_dir, "WAV Files (*.wav)", options=options)
+            self, "Save Audio File", default_path, "WAV Files (*.wav)", options=options)
         if file_path:
             with wave.open(file_path, 'wb') as wf:
                 wf.setnchannels(2)
@@ -53,6 +65,8 @@ class Main(QWidget):
                 wf.setframerate(44100)
                 wf.writeframes(audio_data.tobytes())
             QMessageBox.information(self, "Success", f"Audio saved as {file_path}")
+            self.load_files()
+        self.ui.audio_player_duration.setText("00:00")
 
     def toggle_recording(self):
         if self.is_show_recorder:
@@ -70,7 +84,7 @@ class Main(QWidget):
         else:
             if self.audio_player.is_playing:
                 self.audio_player.stop()
-                self.timer.stop()
+                self.audio_timer.stop()
             self.ui.forward_button.hide()
             self.ui.backward_button.hide()
             self.ui.audio_player_slider.hide()
@@ -78,7 +92,7 @@ class Main(QWidget):
             self.ui.audio_player_current_time.hide()
             self.ui.audio_player_duration.setText("00:00")
             self.ui.audio_player_title.setText("Record Audio")
-            self.ui.audio_player_desc.setText("Click button to start recording")
+            self.ui.audio_player_desc.setText("Click button to start/stop recording")
             self.ui.play_button.setIcon(iconRecordDotGray)
             self.ui.menu_record_button.setIcon(iconRecordRed)
         self.is_show_recorder = not self.is_show_recorder
@@ -96,12 +110,12 @@ class Main(QWidget):
         self.ui.audio_player_current_time.setText(QCoreApplication.translate("Main", self.audio_player.get_current_time_str(), None))
         if prev_state:
             self.ui.play_button.setIcon(iconPauseRed)
-            self.timer.start(1000)
+            self.audio_timer.start(1000)
         else:
             self.ui.play_button.setIcon(iconPlayRed)
             self.audio_player.pause()
             self.ui.audio_player_slider.setValue(new_time)
-            self.timer.stop()
+            self.audio_timer.stop()
 
     def refresh_recordings(self):
         self.ui.recording_container_content = QWidget()
@@ -127,42 +141,53 @@ class Main(QWidget):
         if self.is_show_recorder:
             if self.recorder.isRunning():
                 self.recorder.stop_recording()
+                self.recorder_timer.stop()
                 self.ui.play_button.setIcon(iconRecordDotGray)
-                self.load_files()
             else:
                 self.recorder.start()
+                self.recorder_timer.start(1000)
                 self.ui.play_button.setIcon(iconRecordDotRed)
         else:
             if not self.is_audio_selected: return
             if self.audio_player.is_playing:
                 self.audio_player.pause()
                 self.ui.play_button.setIcon(iconPlayRed)
-                self.timer.stop()
+                self.audio_timer.stop()
             else:
-                self.audio_player.resume()
+                if self.audio_player.current_time >= self.audio_player.duration_seconds:
+                    # start from beginning
+                    self.audio_player.play(starts=0)
+                    self.ui.audio_player_slider.setValue(0)
+                else:
+                    self.audio_player.resume()
                 self.ui.play_button.setIcon(iconPauseRed)
-                self.timer.start(1000)
+                self.audio_timer.start(1000)
 
-    def update_progress(self):
+    def update_audio_progress(self):
         if self.audio_player.is_playing:
             self.audio_player.current_time += 1  # Approximate time tracking
             if self.audio_player.current_time > self.audio_player.duration_seconds:
                 self.audio_player.stop()
-                self.timer.stop()
+                self.audio_timer.stop()
                 self.ui.play_button.setIcon(iconPlayRed)
                 return
             self.ui.audio_player_slider.setValue(self.audio_player.current_time)
             self.ui.audio_player_current_time.setText(QCoreApplication.translate("Main", self.audio_player.get_current_time_str(), None))
         else:
-            self.timer.stop()
+            self.audio_timer.stop()
 
+    def update_recorder_progress(self):
+        # get the diff between current time and recorder timestamp
+        diff = int((time.time() - self.recorder.timestamp.timestamp()))
+        self.ui.audio_player_duration.setText(f"{diff//60:02}:{diff%60:02}")
+    
     def seek_audio(self):
         new_time = self.ui.audio_player_slider.value()
         self.audio_player.stop()
         self.audio_player.play(starts=new_time)
         self.ui.audio_player_current_time.setText(QCoreApplication.translate("Main", self.audio_player.get_current_time_str(), None))
         self.ui.play_button.setIcon(iconPauseRed)
-        self.timer.start(1000)
+        self.audio_timer.start(1000)
 
     def refresh_ui_player(self):
         if self.is_audio_selected:
@@ -184,7 +209,6 @@ class Main(QWidget):
             self.ui.backward_button.setIcon(iconBackwardGray)
         self.ui.audio_player_slider.setValue(0)
 
-
     def setup_player(self, filepath, created_at):
         if self.is_show_recorder:
             self.toggle_recording()
@@ -194,10 +218,10 @@ class Main(QWidget):
         self.audio_player.open(os.path.join(self.root_dir, filepath))
         self.ui.audio_player_slider.setMaximum(self.audio_player.duration_seconds)
         self.audio_player.current_time = 0
-        self.timer.stop()
+        self.audio_timer.stop()
         self.audio_player.play()
         self.ui.play_button.setIcon(iconPauseRed)
-        self.timer.start(1000)
+        self.audio_timer.start(1000)
         self.is_audio_selected = True
         self.refresh_ui_player()
 
