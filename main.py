@@ -174,6 +174,7 @@ class Main(QWidget):
             self.ui.audio_player_title.setText("Welcome to Audio AI")
             self.ui.audio_player_desc.setText("no file selected")
             self.is_audio_selected = False
+            self.transcription_status = ""
             self.refresh_ui_player()
         else:
             if self.audio_player.is_playing:
@@ -191,6 +192,7 @@ class Main(QWidget):
             self.ui.play_button.setIcon(iconRecordDotGray)
             self.ui.menu_record_button.setIcon(iconRecordRed)
         self.is_show_recorder = not self.is_show_recorder
+        self.render_transcription()
 
     def shift_audio(self, seconds=10):
         if not self.is_audio_selected:
@@ -244,53 +246,39 @@ class Main(QWidget):
         self.ui.ai_chatbox_history_layout.addItem(
             self.ui.ai_chatbox_verticalSpacer)
 
-    def send_message(self):
-        # Get the user's message
-        user_message = self.ui.ai_chatbox_input_textarea.toPlainText().strip()
-        if not user_message:
-            return  # Do nothing if the message is empty
+    def store_chat(self):
+        extension = "." + self.audio_player.filepath.split(".")[-1]
+        chat_file = self.audio_player.filepath.replace(
+            extension, "_chat.json")
+        with open(chat_file, "w") as f:
+            json.dump(self.chat_history, f)
 
-        # Add the user's message to the chat history
-        human_label = QFrame()
-        human_label.setObjectName(f"ai_chatbox_human_{len(self.chat_history)}")
-        human_label.setStyleSheet(
-            u"background-color: #575757;\nborder-radius: 10px;")
-        human_label.setFrameShape(QFrame.StyledPanel)
-        human_label.setFrameShadow(QFrame.Raised)
-        human_label_layout = QVBoxLayout(human_label)
-        human_label_layout.setObjectName(
-            f"ai_chatbox_human_verticalLayout_{len(self.chat_history)}")
-        human_label_content = SelectableLabel(user_message, human_label)
-        human_label_content.setObjectName(
-            f"ai_chatbox_human{len(self.chat_history)}_label")
-        human_label_content.setStyleSheet(u"color: #FFF;")
-        human_label_content.setAlignment(
-            Qt.AlignRight | Qt.AlignTrailing | Qt.AlignVCenter)
-        human_label_content.setWordWrap(True)
-        human_label_layout.addWidget(human_label_content)
-        self.ui.ai_chatbox_history_layout.addWidget(human_label)
-        self.chat_history.append(("human", user_message))
+    def generate_qt_chat(self, message, sender):
+        if sender == "bot":
+            color = "#868686"
+        else:
+            color = "#575757"
+        qt_label = QFrame()
+        qt_label.setObjectName(f"ai_chatbox_{sender}_{len(self.chat_history)}")
+        qt_label.setStyleSheet(
+            f"background-color: {color};\nborder-radius: 10px;")
+        qt_label.setFrameShape(QFrame.StyledPanel)
+        qt_label.setFrameShadow(QFrame.Raised)
+        qt_label_layout = QVBoxLayout(qt_label)
+        qt_label_layout.setObjectName(
+            f"ai_chatbox_{sender}_verticalLayout_{len(self.chat_history)}")
+        qt_label_content = SelectableLabel(message, qt_label)
+        qt_label_content.setObjectName(
+            f"ai_chatbox_{sender}{len(self.chat_history)}_label")
+        qt_label_content.setStyleSheet(u"color: #FFF;")
+        if sender == "human":
+            qt_label_content.setAlignment(
+                Qt.AlignRight | Qt.AlignTrailing | Qt.AlignVCenter)
+        qt_label_content.setWordWrap(True)
+        qt_label_layout.addWidget(qt_label_content)
+        return qt_label
 
-        # Add the bot's reply to the chat history
-        bot_reply = f"You said: '{user_message}'?"
-        bot_label = QFrame()
-        bot_label.setObjectName(f"ai_chatbox_bot_{len(self.chat_history)}")
-        bot_label.setStyleSheet(
-            u"background-color: #868686;\nborder-radius: 10px;")
-        bot_label.setFrameShape(QFrame.StyledPanel)
-        bot_label.setFrameShadow(QFrame.Raised)
-        bot_label_layout = QVBoxLayout(bot_label)
-        bot_label_layout.setObjectName(
-            f"ai_chatbox_bot_verticalLayout_{len(self.chat_history)}")
-        bot_label_content = SelectableLabel(bot_reply, bot_label)
-        bot_label_content.setObjectName(
-            f"ai_chatbox_bot{len(self.chat_history)}_label")
-        bot_label_content.setStyleSheet(u"color: #FFF;")
-        bot_label_content.setWordWrap(True)
-        bot_label_layout.addWidget(bot_label_content)
-        self.ui.ai_chatbox_history_layout.addWidget(bot_label)
-        self.chat_history.append(("bot", bot_reply))
-
+    def refresh_chat_textarea(self):
         # Clear the input area
         self.ui.ai_chatbox_input_textarea.clear()
 
@@ -298,6 +286,26 @@ class Main(QWidget):
         QTimer.singleShot(100, lambda: self.ui.ai_chatbox_history_scrollArea.verticalScrollBar().setValue(
             self.ui.ai_chatbox_history_scrollArea.verticalScrollBar().maximum()
         ))
+
+    def send_message(self):
+        # Get the user's message
+        user_message = self.ui.ai_chatbox_input_textarea.toPlainText().strip()
+        if not user_message:
+            return  # Do nothing if the message is empty
+
+        # Add the user's message to the chat history
+        human_label = self.generate_qt_chat(user_message, "human")
+        self.ui.ai_chatbox_history_layout.addWidget(human_label)
+        self.chat_history.append(("human", user_message))
+
+        # Add the bot's reply to the chat history
+        bot_reply = f"You said: '{user_message}'?"
+        bot_label = self.generate_qt_chat(bot_reply, "bot")
+        self.ui.ai_chatbox_history_layout.addWidget(bot_label)
+        self.chat_history.append(("bot", bot_reply))
+
+        self.refresh_chat_textarea()
+        self.store_chat()
 
     def select_directory_dialog(self):
         file_dialog = QFileDialog(self)
@@ -492,21 +500,23 @@ class Main(QWidget):
 
             return qt_segment
 
-        if self.transcription_status == "None":
-            self.ui.transcription_layout.addWidget(generate_qt_segment(
-                "No transcription available", "00:00", "#575757", 0, 0))
-        elif self.transcription_status in ["Transcribed", "Aligned"]:
-            for idx, segment in enumerate(self.transcription["segments"]):
+        if not self.is_show_recorder:
+            if self.transcription_status == "None":
                 self.ui.transcription_layout.addWidget(generate_qt_segment(
-                    segment["text"], int(segment['start']), "#575757", 0, idx))
-        elif self.transcription_status == "Diarized":
-            for idx, segment in enumerate(self.transcription["segments"]):
-                speaker_id, color = "99", "#000"
-                if "speaker" in segment:
-                    speaker_id = int(segment["speaker"].split("_")[-1])
-                    color = colors[speaker_id % len(colors)]
-                self.ui.transcription_layout.addWidget(generate_qt_segment(
-                    segment["text"], int(segment['start']), color, speaker_id, idx))
+                    "No transcription available.\n\n"
+                    "Click the Transcribe/Alignment/Diarization button to start!", 0, "#575757", 0, 0))
+            elif self.transcription_status in ["Transcribed", "Aligned"]:
+                for idx, segment in enumerate(self.transcription["segments"]):
+                    self.ui.transcription_layout.addWidget(generate_qt_segment(
+                        segment["text"], int(segment['start']), "#575757", 0, idx))
+            elif self.transcription_status == "Diarized":
+                for idx, segment in enumerate(self.transcription["segments"]):
+                    speaker_id, color = "99", "#000"
+                    if "speaker" in segment:
+                        speaker_id = int(segment["speaker"].split("_")[-1])
+                        color = colors[speaker_id % len(colors)]
+                    self.ui.transcription_layout.addWidget(generate_qt_segment(
+                        segment["text"], int(segment['start']), color, speaker_id, idx))
 
         self.ui.transcription_verticalSpacer = QSpacerItem(
             20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
@@ -533,12 +543,28 @@ class Main(QWidget):
 
         self.render_transcription()
 
+    def setup_chat(self):
+        print("Setting up chat")
+        self.refresh_chat()
+        self.chat_history = []
+        extension = "." + self.audio_player.filepath.split(".")[-1]
+        chat_file = self.audio_player.filepath.replace(
+            extension, "_chat.json")
+        if os.path.exists(chat_file):
+            self.chat_history = json.load(open(chat_file, "r"))
+            for sender, message in self.chat_history:
+                qt_label = self.generate_qt_chat(message, sender)
+                self.ui.ai_chatbox_history_layout.addWidget(qt_label)
+
+        self.refresh_chat_textarea()
+
     def setup_workstation(self, filepath, created_at):
         self.setup_player(filepath, created_at)
         # check latest status of transcription
         self.transcription_status, self.transcription = self.load_transcription(
             filepath)
         self.refresh_transcription_status()
+        self.setup_chat()
 
     def load_files(self):
         files = []  # contains pair of (relative path to root_dir, created_at)
