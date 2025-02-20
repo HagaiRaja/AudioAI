@@ -74,6 +74,22 @@ class Main(QWidget):
             and (event.key() == Qt.Key_Return or event.key() == Qt.Key_Enter) \
             else original_keyPressEvent(event)
 
+        self.ui.clear_chat_button.clicked.connect(self.clear_chat)
+
+    def get_file_for(self, purpose):
+        extension = "." + self.audio_player.filepath.split(".")[-1]
+        if purpose == "chat":
+            return self.audio_player.filepath.replace(extension, "_chat.json")
+        elif purpose == "transcription":
+            return self.audio_player.filepath.replace(extension, "_transcription.json")
+
+    def clear_chat(self):
+        self.chat_history = []
+        self.refresh_chat()
+        chat_file = self.get_file_for("chat")
+        if os.path.exists(chat_file):
+            os.remove(chat_file)
+
     def _init_ai(self):
         self.transcriber = Transcribe()
         self.ui.transcribe_container.mousePressEvent = lambda event: self.transcribe_audio()
@@ -84,9 +100,7 @@ class Main(QWidget):
             self.ui.transcription_content)
 
     def store_transcription(self):
-        extension = "." + self.audio_player.filepath.split(".")[-1]
-        transcription_file = self.audio_player.filepath.replace(
-            extension, "_transcription.json")
+        transcription_file = self.get_file_for("transcription")
         with open(transcription_file, "w") as f:
             json.dump(self.transcription, f)
 
@@ -247,9 +261,7 @@ class Main(QWidget):
             self.ui.ai_chatbox_verticalSpacer)
 
     def store_chat(self):
-        extension = "." + self.audio_player.filepath.split(".")[-1]
-        chat_file = self.audio_player.filepath.replace(
-            extension, "_chat.json")
+        chat_file = self.get_file_for("chat")
         with open(chat_file, "w") as f:
             json.dump(self.chat_history, f)
 
@@ -547,9 +559,7 @@ class Main(QWidget):
         print("Setting up chat")
         self.refresh_chat()
         self.chat_history = []
-        extension = "." + self.audio_player.filepath.split(".")[-1]
-        chat_file = self.audio_player.filepath.replace(
-            extension, "_chat.json")
+        chat_file = self.get_file_for("chat")
         if os.path.exists(chat_file):
             self.chat_history = json.load(open(chat_file, "r"))
             for sender, message in self.chat_history:

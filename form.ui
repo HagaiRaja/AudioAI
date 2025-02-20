@@ -1779,6 +1779,67 @@ border-radius: 15px</string>
              <number>12</number>
             </property>
             <item>
+             <widget class="QFrame" name="cleat_chat_container">
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_13">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>5</number>
+               </property>
+               <item>
+                <spacer name="clear_chat_horizontalSpacer">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
+                <widget class="QPushButton" name="clear_chat_button">
+                 <property name="minimumSize">
+                  <size>
+                   <width>80</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">color: &quot;#FFF&quot;;
+background-color: #0D0404;
+border-radius: 10px;</string>
+                 </property>
+                 <property name="text">
+                  <string>Clear Chat</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
              <widget class="QScrollArea" name="ai_chatbox_history_scrollArea">
               <property name="widgetResizable">
                <bool>true</bool>
@@ -1789,7 +1850,7 @@ border-radius: 15px</string>
                  <x>0</x>
                  <y>0</y>
                  <width>352</width>
-                 <height>330</height>
+                 <height>298</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_27">
@@ -2157,22 +2218,6 @@ border-radius: 10px;</string>
                  <number>5</number>
                 </property>
                 <item>
-                 <widget class="QLabel" name="transcription_speaker1_1_time">
-                  <property name="cursor">
-                   <cursorShape>PointingHandCursor</cursorShape>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">color: #FFF;</string>
-                  </property>
-                  <property name="text">
-                   <string>00:00</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item>
                  <widget class="QLabel" name="transcription_speaker1_1_label">
                   <property name="font">
                    <font>
@@ -2229,22 +2274,6 @@ border-radius: 10px;</string>
                  <number>5</number>
                 </property>
                 <item>
-                 <widget class="QLabel" name="label">
-                  <property name="cursor">
-                   <cursorShape>PointingHandCursor</cursorShape>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">color: #FFF;</string>
-                  </property>
-                  <property name="text">
-                   <string>00:05</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item>
                  <widget class="QLabel" name="transcription_speaker2_1_label">
                   <property name="font">
                    <font>
@@ -2292,22 +2321,6 @@ border-radius: 10px;</string>
                 <property name="bottomMargin">
                  <number>5</number>
                 </property>
-                <item>
-                 <widget class="QLabel" name="label_2">
-                  <property name="cursor">
-                   <cursorShape>PointingHandCursor</cursorShape>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">color: #FFF;</string>
-                  </property>
-                  <property name="text">
-                   <string>00:08</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
                 <item>
                  <widget class="QLabel" name="transcription_speaker3_1_label">
                   <property name="font">

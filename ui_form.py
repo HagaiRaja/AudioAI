@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'form.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.7.3
+## Created by: Qt User Interface Compiler version 6.8.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -804,12 +804,37 @@ class Ui_Main(object):
         self.verticalLayout_26.setSpacing(0)
         self.verticalLayout_26.setObjectName(u"verticalLayout_26")
         self.verticalLayout_26.setContentsMargins(12, 12, 12, 12)
+        self.cleat_chat_container = QFrame(self.ai_chatbox_history_container)
+        self.cleat_chat_container.setObjectName(u"cleat_chat_container")
+        self.cleat_chat_container.setFrameShape(QFrame.StyledPanel)
+        self.cleat_chat_container.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_13 = QHBoxLayout(self.cleat_chat_container)
+        self.horizontalLayout_13.setSpacing(0)
+        self.horizontalLayout_13.setObjectName(u"horizontalLayout_13")
+        self.horizontalLayout_13.setContentsMargins(0, 0, 0, 5)
+        self.clear_chat_horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_13.addItem(self.clear_chat_horizontalSpacer)
+
+        self.clear_chat_button = QPushButton(self.cleat_chat_container)
+        self.clear_chat_button.setObjectName(u"clear_chat_button")
+        self.clear_chat_button.setMinimumSize(QSize(80, 20))
+        self.clear_chat_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.clear_chat_button.setStyleSheet(u"color: \"#FFF\";\n"
+"background-color: #0D0404;\n"
+"border-radius: 10px;")
+
+        self.horizontalLayout_13.addWidget(self.clear_chat_button)
+
+
+        self.verticalLayout_26.addWidget(self.cleat_chat_container)
+
         self.ai_chatbox_history_scrollArea = QScrollArea(self.ai_chatbox_history_container)
         self.ai_chatbox_history_scrollArea.setObjectName(u"ai_chatbox_history_scrollArea")
         self.ai_chatbox_history_scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 352, 330))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 352, 298))
         self.verticalLayout_27 = QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_27.setSpacing(5)
         self.verticalLayout_27.setObjectName(u"verticalLayout_27")
@@ -987,14 +1012,6 @@ class Ui_Main(object):
         self.verticalLayout_11.setSpacing(0)
         self.verticalLayout_11.setObjectName(u"verticalLayout_11")
         self.verticalLayout_11.setContentsMargins(10, 5, 5, 5)
-        self.transcription_speaker1_1_time = QLabel(self.transcription_speaker1_1)
-        self.transcription_speaker1_1_time.setObjectName(u"transcription_speaker1_1_time")
-        self.transcription_speaker1_1_time.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-        self.transcription_speaker1_1_time.setStyleSheet(u"color: #FFF;")
-        self.transcription_speaker1_1_time.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-
-        self.verticalLayout_11.addWidget(self.transcription_speaker1_1_time)
-
         self.transcription_speaker1_1_label = QLabel(self.transcription_speaker1_1)
         self.transcription_speaker1_1_label.setObjectName(u"transcription_speaker1_1_label")
         self.transcription_speaker1_1_label.setFont(font5)
@@ -1016,14 +1033,6 @@ class Ui_Main(object):
         self.verticalLayout_12.setSpacing(0)
         self.verticalLayout_12.setObjectName(u"verticalLayout_12")
         self.verticalLayout_12.setContentsMargins(10, 5, 5, 5)
-        self.label = QLabel(self.transcription_speaker2_1)
-        self.label.setObjectName(u"label")
-        self.label.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-        self.label.setStyleSheet(u"color: #FFF;")
-        self.label.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-
-        self.verticalLayout_12.addWidget(self.label)
-
         self.transcription_speaker2_1_label = QLabel(self.transcription_speaker2_1)
         self.transcription_speaker2_1_label.setObjectName(u"transcription_speaker2_1_label")
         self.transcription_speaker2_1_label.setFont(font5)
@@ -1044,14 +1053,6 @@ class Ui_Main(object):
         self.verticalLayout_13.setSpacing(0)
         self.verticalLayout_13.setObjectName(u"verticalLayout_13")
         self.verticalLayout_13.setContentsMargins(10, 5, 5, 5)
-        self.label_2 = QLabel(self.transcription_speaker3_1)
-        self.label_2.setObjectName(u"label_2")
-        self.label_2.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-        self.label_2.setStyleSheet(u"color: #FFF;")
-        self.label_2.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-
-        self.verticalLayout_13.addWidget(self.label_2)
-
         self.transcription_speaker3_1_label = QLabel(self.transcription_speaker3_1)
         self.transcription_speaker3_1_label.setObjectName(u"transcription_speaker3_1_label")
         self.transcription_speaker3_1_label.setFont(font5)
@@ -1116,6 +1117,7 @@ class Ui_Main(object):
         self.backward_button.setText("")
         self.play_button.setText("")
         self.forward_button.setText("")
+        self.clear_chat_button.setText(QCoreApplication.translate("Main", u"Clear Chat", None))
         self.ai_chatbox_human1_label.setText(QCoreApplication.translate("Main", u"List all Past Medical History of Bob!", None))
         self.ai_chatbox_bot1_label.setText(QCoreApplication.translate("Main", u"asdasdasd\n"
 "sdasdasd\n"
@@ -1127,13 +1129,10 @@ class Ui_Main(object):
         self.ai_chatbox_input_textarea.setPlaceholderText(QCoreApplication.translate("Main", u"Ask anything about the audio content...", None))
         self.ai_chatbox_input_button.setText("")
         self.transcription_label.setText(QCoreApplication.translate("Main", u"Transcription", None))
-        self.transcription_speaker1_1_time.setText(QCoreApplication.translate("Main", u"00:00", None))
         self.transcription_speaker1_1_label.setText(QCoreApplication.translate("Main", u"asdasdasd\n"
 "sdasdasd\n"
 "asdasdasd", None))
-        self.label.setText(QCoreApplication.translate("Main", u"00:05", None))
         self.transcription_speaker2_1_label.setText(QCoreApplication.translate("Main", u"Bob Keating TIMA", None))
-        self.label_2.setText(QCoreApplication.translate("Main", u"00:08", None))
         self.transcription_speaker3_1_label.setText(QCoreApplication.translate("Main", u"asdasdasd\n"
 "sdasdasd\n"
 "asdasdasd", None))
