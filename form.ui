@@ -1789,7 +1789,7 @@ border-radius: 15px</string>
                  <x>0</x>
                  <y>0</y>
                  <width>352</width>
-                 <height>323</height>
+                 <height>330</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_27">
@@ -2157,6 +2157,22 @@ border-radius: 10px;</string>
                  <number>5</number>
                 </property>
                 <item>
+                 <widget class="QLabel" name="transcription_speaker1_1_time">
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: #FFF;</string>
+                  </property>
+                  <property name="text">
+                   <string>00:00</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
                  <widget class="QLabel" name="transcription_speaker1_1_label">
                   <property name="font">
                    <font>
@@ -2213,6 +2229,22 @@ border-radius: 10px;</string>
                  <number>5</number>
                 </property>
                 <item>
+                 <widget class="QLabel" name="label">
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: #FFF;</string>
+                  </property>
+                  <property name="text">
+                   <string>00:05</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
                  <widget class="QLabel" name="transcription_speaker2_1_label">
                   <property name="font">
                    <font>
@@ -2260,6 +2292,22 @@ border-radius: 10px;</string>
                 <property name="bottomMargin">
                  <number>5</number>
                 </property>
+                <item>
+                 <widget class="QLabel" name="label_2">
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: #FFF;</string>
+                  </property>
+                  <property name="text">
+                   <string>00:08</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
                 <item>
                  <widget class="QLabel" name="transcription_speaker3_1_label">
                   <property name="font">

@@ -6,27 +6,27 @@ from audio_util import convert_audio
 
 
 class AudioPlayer():
-    def __init__(self, file_path=None):
+    def __init__(self, filepath=None):
         """Initializes the audio player with the given audio file path."""
-        self.file_path = file_path
+        self.filepath = filepath
         pygame.mixer.init()
-        if file_path != None:
-            self.open(file_path)
+        if filepath != None:
+            self.open(filepath)
         self.duration_str, self.duration_seconds = 0, 0
         self.is_playing = False
         self.current_time = 0
 
-    def open(self, file_path):
+    def open(self, filepath):
         """Opens a new audio file."""
-        if file_path.endswith(".m4a"):
-            output_file = file_path.replace(".m4a", "_converted.mp3")
+        if filepath.endswith(".m4a"):
+            output_file = filepath.replace(".m4a", "_converted.mp3")
             if not os.path.exists(output_file):
-                convert_audio(file_path, output_file)
-            self.file_path = output_file
+                convert_audio(filepath, output_file)
+            self.filepath = output_file
         else:
-            self.file_path = file_path
-        pygame.mixer.music.load(self.file_path)
-        self.sound = pygame.mixer.Sound(self.file_path)
+            self.filepath = filepath
+        pygame.mixer.music.load(self.filepath)
+        self.sound = pygame.mixer.Sound(self.filepath)
         self.duration_str, self.duration_seconds = self.get_duration()
 
     def get_duration(self):
@@ -73,10 +73,10 @@ class AudioPlayer():
 
 # Example usage
 if __name__ == "__main__":
-    file_path1 = "sounds/test 1/Vivek Podcast.mp3"
-    file_path2 = "sounds/test 1/Jokowi Mata Najwa.mp3"
+    filepath1 = "sounds/test 1/Vivek Podcast.mp3"
+    filepath2 = "sounds/test 1/Jokowi Mata Najwa.mp3"
 
-    audio = AudioPlayer(file_path1)
+    audio = AudioPlayer(filepath1)
 
     duration_str, _ = audio.get_duration()
     print("Audio Duration:", duration_str)

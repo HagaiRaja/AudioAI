@@ -1,5 +1,5 @@
 from PySide6.QtCore import QSize
-from PySide6.QtGui import QIcon
+from PySide6.QtGui import QIcon, QFont
 
 iconPlayRed = QIcon()
 iconPlayRed.addFile(u":/Icons/images/icons/icons8-play_red.png",
@@ -52,3 +52,10 @@ iconSoundGray.addFile(u":/Icons/images/icons/icons8-audiomaster_gray.png",
 iconSoundRed = QIcon()
 iconSoundRed.addFile(u":/Icons/images/icons/icons8-audiomaster_red.png",
                      QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+
+
+font5 = QFont()
+font5.setFamilies([u"Poppins"])
+font5.setBold(False)
+
+colors = ["#575757", "#868686", "#0D0404", "#757575"]

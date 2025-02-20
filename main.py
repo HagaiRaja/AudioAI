@@ -32,12 +32,11 @@ class Main(QWidget):
         self._init_audio()
         self._init_recorder()
         self._init_chat()
-
-        self.transcriber = Transcribe()
+        self._init_ai()
 
     def _init_ui(self):
         self.ui.menu_settings_button.clicked.connect(
-            self.selectDirectoryDialog)
+            self.select_directory_dialog)
         self.ui.play_button.clicked.connect(self.toggle_play_pause)
         self.ui.audio_player_slider.sliderReleased.connect(self.seek_audio)
         self.ui.audio_player_slider.setMinimum(0)
@@ -74,6 +73,76 @@ class Main(QWidget):
             if (event.modifiers() & Qt.ControlModifier) \
             and (event.key() == Qt.Key_Return or event.key() == Qt.Key_Enter) \
             else original_keyPressEvent(event)
+
+    def _init_ai(self):
+        self.transcriber = Transcribe()
+        self.ui.transcribe_container.mousePressEvent = lambda event: self.transcribe_audio()
+        self.ui.alignment_container.mousePressEvent = lambda event: self.align_transcription()
+        self.ui.diarization_container.mousePressEvent = lambda event: self.diarize_transcription()
+        self.ui.transcription_content = QWidget()
+        self.ui.transcription_scrollArea.setWidget(
+            self.ui.transcription_content)
+
+    def store_transcription(self):
+        extension = "." + self.audio_player.filepath.split(".")[-1]
+        transcription_file = self.audio_player.filepath.replace(
+            extension, "_transcription.json")
+        with open(transcription_file, "w") as f:
+            json.dump(self.transcription, f)
+
+    def transcribe_audio(self):
+        if not self.is_audio_selected:
+            return
+        if self.transcription_status != "None":  # already transcribed
+            return
+
+        self.ui.transcribe_container.setStyleSheet(u"background-color: #F00;\n"
+                                                   "border-radius: 10px;")
+        self.transcription = self.transcriber.transcribe_audio(
+            self.audio_player.filepath)
+        self.store_transcription()
+        self.transcription_status = "Transcribed"
+        self.ui.transcribe_container.setStyleSheet(u"background-color: #2B2B2B;\n"
+                                                   "border-radius: 10px;")
+        self.refresh_transcription_status()
+
+    def align_transcription(self):
+        if not self.is_audio_selected:
+            return
+        if self.transcription_status == "None":
+            self.transcribe_audio()
+        if self.transcription_status != "Transcribed":  # already aligned
+            return
+
+        self.ui.alignment_container.setStyleSheet(u"background-color: #F00;\n"
+                                                  "border-radius: 10px;")
+        self.transcription = self.transcriber.align_transcription(
+            self.transcription, self.audio_player.filepath)
+        self.store_transcription()
+        self.transcription_status = "Aligned"
+        self.ui.alignment_container.setStyleSheet(u"background-color: #2B2B2B;\n"
+                                                  "border-radius: 10px;")
+        self.refresh_transcription_status()
+
+    def diarize_transcription(self):
+        if not self.is_audio_selected:
+            return
+        if self.transcription_status == "None":
+            self.transcribe_audio()
+        if self.transcription_status == "Transcribed":
+            self.align_transcription()
+        if self.transcription_status != "Aligned":  # already diarized
+            return
+
+        self.ui.diarization_container.setStyleSheet(u"background-color: #F00;\n"
+                                                    "border-radius: 10px;")
+        self.transcription = self.transcriber.diarize_transcription(
+            self.transcription, self.audio_player.filepath)
+        self.store_transcription()
+        self.transcription_status = "Diarized"
+        self.ui.diarization_container.setStyleSheet(u"background-color: #2B2B2B;\n"
+                                                    "border-radius: 10px;")
+        self.refresh_transcription_status()
 
     def save_audio(self, audio_data):
         options = QFileDialog.Options()
@@ -230,7 +299,7 @@ class Main(QWidget):
             self.ui.ai_chatbox_history_scrollArea.verticalScrollBar().maximum()
         ))
 
-    def selectDirectoryDialog(self):
+    def select_directory_dialog(self):
         file_dialog = QFileDialog(self)
         file_dialog.setWindowTitle("Select Root Directory")
         file_dialog.setFileMode(QFileDialog.FileMode.Directory)
@@ -332,8 +401,8 @@ class Main(QWidget):
         self.audio_player.current_time = 0
         self.audio_timer.stop()
         self.audio_player.play()
-        self.ui.play_button.setIcon(iconPauseRed)
-        self.audio_timer.start(1000)
+        self.audio_player.pause()
+        self.ui.play_button.setIcon(iconPlayRed)
         self.is_audio_selected = True
         self.refresh_ui_player()
 
@@ -356,6 +425,94 @@ class Main(QWidget):
         status = self.check_transcription_status(transcription)
         return status, transcription
 
+    def audio_jump_to(self, timestamp):
+        self.audio_player.stop()
+        self.audio_player.play(starts=timestamp)
+        self.ui.audio_player_slider.setValue(timestamp)
+        self.ui.audio_player_current_time.setText(QCoreApplication.translate(
+            "Main", self.audio_player.get_current_time_str(), None))
+        self.ui.play_button.setIcon(iconPauseRed)
+        self.audio_timer.start(1000)
+
+    def render_transcription(self):
+        self.ui.transcription_content = QWidget()
+        self.ui.transcription_content.setObjectName(
+            u"transcription_content")
+        self.ui.transcription_content.setGeometry(QRect(0, 0, 174, 397))
+        self.ui.transcription_layout = QVBoxLayout(
+            self.ui.transcription_content)
+        self.ui.transcription_layout.setObjectName(
+            u"transcription_layout")
+        self.ui.transcription_layout.setContentsMargins(5, 5, 0, 0)
+        self.ui.transcription_layout.setSpacing(5)
+        self.ui.transcription_scrollArea.setWidget(
+            self.ui.transcription_content)
+
+        def int2hour(seconds):
+            hh, mm, ss = seconds // 3600, (seconds % 3600) // 60, seconds % 60
+            if hh == 0:
+                return f"{mm:02}:{ss:02}"
+            return f"{hh:02}:{mm:02}:{ss:02}"
+
+        def generate_qt_segment(text, timestamp, color, speakerId, segmentId):
+            qt_segment = QFrame()
+            qt_segment.setObjectName(
+                f"transcription_speaker_{speakerId}_{segmentId}")
+            qt_segment.setStyleSheet(f"background-color: {color};\n"
+                                     "border-radius: 10px;")
+            qt_segment.setFrameShape(QFrame.StyledPanel)
+            qt_segment.setFrameShadow(QFrame.Raised)
+            qt_segment_layout = QVBoxLayout(qt_segment)
+            qt_segment_layout.setSpacing(0)
+            qt_segment_layout.setObjectName(
+                f"verticalLayout_{speakerId}_{segmentId}")
+            qt_segment_layout.setContentsMargins(10, 5, 5, 5)
+
+            qt_segment_time = QLabel(qt_segment)
+            qt_segment_time.setObjectName(
+                f"transcription_speaker_{speakerId}_{segmentId}_time")
+            qt_segment_time.setCursor(
+                QCursor(Qt.CursorShape.PointingHandCursor))
+            qt_segment_time.setStyleSheet(u"color: #FFF;")
+            qt_segment_time.setAlignment(
+                Qt.AlignRight | Qt.AlignTrailing | Qt.AlignVCenter)
+            qt_segment_time.setText(
+                QCoreApplication.translate("Main", f"{int2hour(timestamp)}", None))
+            qt_segment_time.mousePressEvent = lambda event, st=timestamp: self.audio_jump_to(
+                st)
+            qt_segment_layout.addWidget(qt_segment_time)
+
+            qt_segment_label = SelectableLabel(text, qt_segment)
+            qt_segment_label.setObjectName(
+                f"transcription_speaker_{speakerId}_{segmentId}_label")
+            qt_segment_label.setFont(font5)
+            qt_segment_label.setStyleSheet(u"color: #FFF;")
+            qt_segment_label.setWordWrap(True)
+            qt_segment_layout.addWidget(qt_segment_label)
+
+            return qt_segment
+
+        if self.transcription_status == "None":
+            self.ui.transcription_layout.addWidget(generate_qt_segment(
+                "No transcription available", "00:00", "#575757", 0, 0))
+        elif self.transcription_status in ["Transcribed", "Aligned"]:
+            for idx, segment in enumerate(self.transcription["segments"]):
+                self.ui.transcription_layout.addWidget(generate_qt_segment(
+                    segment["text"], int(segment['start']), "#575757", 0, idx))
+        elif self.transcription_status == "Diarized":
+            for idx, segment in enumerate(self.transcription["segments"]):
+                speaker_id, color = "99", "#000"
+                if "speaker" in segment:
+                    speaker_id = int(segment["speaker"].split("_")[-1])
+                    color = colors[speaker_id % len(colors)]
+                self.ui.transcription_layout.addWidget(generate_qt_segment(
+                    segment["text"], int(segment['start']), color, speaker_id, idx))
+
+        self.ui.transcription_verticalSpacer = QSpacerItem(
+            20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.ui.transcription_layout.addItem(
+            self.ui.transcription_verticalSpacer)
+
     def refresh_transcription_status(self):
         if self.transcription_status == "None":
             self.ui.transcribe_icon.setIcon(iconSoundGray)
@@ -373,6 +530,8 @@ class Main(QWidget):
             self.ui.transcribe_icon.setIcon(iconSoundRed)
             self.ui.alignment_icon.setIcon(iconSoundRed)
             self.ui.diarization_icon.setIcon(iconSoundRed)
+
+        self.render_transcription()
 
     def setup_workstation(self, filepath, created_at):
         self.setup_player(filepath, created_at)
@@ -473,13 +632,14 @@ class Main(QWidget):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     widget = Main()
-    from icons import (
+    from constant import (
         iconPlayRed, iconPlayGray, iconPauseRed,
         iconRecordGray, iconRecordRed,
         iconRecordDotGray, iconRecordDotRed,
         iconForwardGray, iconForwardRed,
         iconBackwardGray, iconBackwardRed,
         iconSoundGray, iconSoundRed,
+        font5, colors
     )
     widget.show()
     sys.exit(app.exec())

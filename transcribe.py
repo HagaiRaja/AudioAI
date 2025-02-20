@@ -1,6 +1,6 @@
-import torch
-import whisperx
-import gc
+# import torch
+# import whisperx
+# import gc
 from dotenv import load_dotenv
 import os
 import time
@@ -25,9 +25,9 @@ class Transcribe():
     def check_audio(self, audio_file):
         if self.audio_file != audio_file:
             self.audio_file = audio_file
-            self.audio = whisperx.load_audio(audio_file)
+            # self.audio = whisperx.load_audio(audio_file)
 
-    def transcribe_audio(self, audio_file, batch_size=16):
+    def transcribe_audio(self, audio_file, batch_size=16, store_transcription=False):
         # self.check_audio(audio_file)
         # result = self.model.transcribe(self.audio, batch_size=batch_size)
         result = {
@@ -39,7 +39,7 @@ class Transcribe():
                 }],
             "language": "id"
         }
-        time.sleep(3)
+        time.sleep(5)
         return result
 
     def align_transcription(self, result, audio_file):
@@ -67,10 +67,10 @@ class Transcribe():
                 {"word": "a", "start": 0.292, "end": 0.312, "score": 0.999},
             ]
         }
-        time.sleep(3)
+        time.sleep(5)
         return result
 
-    def assign_speakers(self, result, audio_file):
+    def diarize_transcription(self, result, audio_file):
         # self.check_audio(audio_file)
         # diarize_segments = self.diarize_model(self.audio)
         # result = whisperx.assign_word_speakers(diarize_segments, result)
@@ -116,15 +116,15 @@ class Transcribe():
                 },
             ]
         }
-        time.sleep(3)
+        time.sleep(5)
         return result
 
     def delete_models(self):
         del self.model
         del self.model_a
         del self.metadata
-        gc.collect()
-        torch.cuda.empty_cache()
+        # gc.collect()
+        # torch.cuda.empty_cache()
 
 
 # Usage
