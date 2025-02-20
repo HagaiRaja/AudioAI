@@ -4,6 +4,7 @@ import os
 import time
 import shutil
 import wave
+import json
 
 from PySide6.QtWidgets import QApplication, QWidget, QFileDialog, QVBoxLayout, QFrame, QLabel, QSpacerItem, QSizePolicy, QMessageBox
 from PySide6.QtGui import (QFont, QCursor, QIcon)
@@ -17,6 +18,7 @@ from ui_form import Ui_Main
 from audio_player import AudioPlayer
 from audio_recorder import AudioRecorder
 from custom_widget import SelectableLabel
+from transcribe import Transcribe
 
 
 class Main(QWidget):
@@ -30,6 +32,8 @@ class Main(QWidget):
         self._init_audio()
         self._init_recorder()
         self._init_chat()
+
+        self.transcriber = Transcribe()
 
     def _init_ui(self):
         self.ui.menu_settings_button.clicked.connect(
@@ -333,6 +337,50 @@ class Main(QWidget):
         self.is_audio_selected = True
         self.refresh_ui_player()
 
+    def check_transcription_status(self, transcription):
+        if "word_segments" in transcription:
+            for segment in transcription["word_segments"]:
+                if "speaker" in segment:
+                    return "Diarized"
+            return "Aligned"
+        return "Transcribed"
+
+    def load_transcription(self, filepath):
+        extension = "." + filepath.split(".")[-1]
+        transcription_file = os.path.join(
+            self.root_dir, filepath.replace(extension, "_transcription.json"))
+        print(transcription_file)
+        if not os.path.exists(transcription_file):
+            return "None", None
+        transcription = json.load(open(transcription_file, "r"))
+        status = self.check_transcription_status(transcription)
+        return status, transcription
+
+    def refresh_transcription_status(self):
+        if self.transcription_status == "None":
+            self.ui.transcribe_icon.setIcon(iconSoundGray)
+            self.ui.alignment_icon.setIcon(iconSoundGray)
+            self.ui.diarization_icon.setIcon(iconSoundGray)
+        elif self.transcription_status == "Transcribed":
+            self.ui.transcribe_icon.setIcon(iconSoundRed)
+            self.ui.alignment_icon.setIcon(iconSoundGray)
+            self.ui.diarization_icon.setIcon(iconSoundGray)
+        elif self.transcription_status == "Aligned":
+            self.ui.transcribe_icon.setIcon(iconSoundRed)
+            self.ui.alignment_icon.setIcon(iconSoundRed)
+            self.ui.diarization_icon.setIcon(iconSoundGray)
+        elif self.transcription_status == "Diarized":
+            self.ui.transcribe_icon.setIcon(iconSoundRed)
+            self.ui.alignment_icon.setIcon(iconSoundRed)
+            self.ui.diarization_icon.setIcon(iconSoundRed)
+
+    def setup_workstation(self, filepath, created_at):
+        self.setup_player(filepath, created_at)
+        # check latest status of transcription
+        self.transcription_status, self.transcription = self.load_transcription(
+            filepath)
+        self.refresh_transcription_status()
+
     def load_files(self):
         files = []  # contains pair of (relative path to root_dir, created_at)
         for root, _, filenames in os.walk(self.root_dir):
@@ -373,7 +421,7 @@ class Main(QWidget):
             verticalLayout.setObjectName(f"verticalLayout_{id}")
             verticalLayout.setContentsMargins(5, 0, 0, 0)
             # if recording_frame is clicked, setup the player
-            recording_frame.mousePressEvent = lambda event, fp=filepath, ca=created_at: self.setup_player(
+            recording_frame.mousePressEvent = lambda event, fp=filepath, ca=created_at: self.setup_workstation(
                 fp, ca)
 
             recording_title = QLabel(recording_frame)
@@ -430,7 +478,8 @@ if __name__ == "__main__":
         iconRecordGray, iconRecordRed,
         iconRecordDotGray, iconRecordDotRed,
         iconForwardGray, iconForwardRed,
-        iconBackwardGray, iconBackwardRed
+        iconBackwardGray, iconBackwardRed,
+        iconSoundGray, iconSoundRed,
     )
     widget.show()
     sys.exit(app.exec())

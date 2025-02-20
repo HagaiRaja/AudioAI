@@ -1,3 +1,6 @@
+whisperx
 PySide6
 pygame
 sounddevice
+python-dotenv
+ffmpeg-python

@@ -760,7 +760,7 @@ border-radius: 10px;</string>
                  </property>
                  <property name="icon">
                   <iconset resource="resource.qrc">
-                   <normaloff>:/Icons/images/icons/icons8-audiomaster_red.png</normaloff>:/Icons/images/icons/icons8-audiomaster_red.png</iconset>
+                   <normaloff>:/Icons/images/icons/icons8-audiomaster_gray.png</normaloff>:/Icons/images/icons/icons8-audiomaster_gray.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -923,7 +923,7 @@ border-radius: 10px;</string>
                  </property>
                  <property name="icon">
                   <iconset resource="resource.qrc">
-                   <normaloff>:/Icons/images/icons/icons8-audiomaster_red.png</normaloff>:/Icons/images/icons/icons8-audiomaster_red.png</iconset>
+                   <normaloff>:/Icons/images/icons/icons8-audiomaster_gray.png</normaloff>:/Icons/images/icons/icons8-audiomaster_gray.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -1080,7 +1080,7 @@ border-radius: 10px;</string>
                  </property>
                  <property name="icon">
                   <iconset resource="resource.qrc">
-                   <normaloff>:/Icons/images/icons/icons8-audiomaster_red.png</normaloff>:/Icons/images/icons/icons8-audiomaster_red.png</iconset>
+                   <normaloff>:/Icons/images/icons/icons8-audiomaster_gray.png</normaloff>:/Icons/images/icons/icons8-audiomaster_gray.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -1237,7 +1237,7 @@ border-radius: 10px;</string>
                  </property>
                  <property name="icon">
                   <iconset resource="resource.qrc">
-                   <normaloff>:/Icons/images/icons/icons8-audiomaster_red.png</normaloff>:/Icons/images/icons/icons8-audiomaster_red.png</iconset>
+                   <normaloff>:/Icons/images/icons/icons8-audiomaster_gray.png</normaloff>:/Icons/images/icons/icons8-audiomaster_gray.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -1466,7 +1466,7 @@ border-radius: 10px;</string>
                   <string notr="true">color: #858585;</string>
                  </property>
                  <property name="text">
-                  <string>no file selected</string>
+                  <string>select file from recordings or import</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
@@ -1789,7 +1789,7 @@ border-radius: 15px</string>
                  <x>0</x>
                  <y>0</y>
                  <width>352</width>
-                 <height>330</height>
+                 <height>323</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_27">

@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'form.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.7.3
+## Created by: Qt User Interface Compiler version 6.8.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -351,7 +351,7 @@ class Ui_Main(object):
         self.transcribe_icon = QPushButton(self.transcribe_container_icon)
         self.transcribe_icon.setObjectName(u"transcribe_icon")
         icon5 = QIcon()
-        icon5.addFile(u":/Icons/images/icons/icons8-audiomaster_red.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon5.addFile(u":/Icons/images/icons/icons8-audiomaster_gray.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.transcribe_icon.setIcon(icon5)
 
         self.verticalLayout_15.addWidget(self.transcribe_icon)
@@ -809,7 +809,7 @@ class Ui_Main(object):
         self.ai_chatbox_history_scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 352, 330))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 352, 323))
         self.verticalLayout_27 = QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_27.setSpacing(5)
         self.verticalLayout_27.setObjectName(u"verticalLayout_27")
@@ -1086,7 +1086,7 @@ class Ui_Main(object):
         self.rag_label.setText(QCoreApplication.translate("Main", u"RAG", None))
         self.rag_model.setText(QCoreApplication.translate("Main", u"R3", None))
         self.audio_player_title.setText(QCoreApplication.translate("Main", u"Welcome to AudioAI", None))
-        self.audio_player_desc.setText(QCoreApplication.translate("Main", u"no file selected", None))
+        self.audio_player_desc.setText(QCoreApplication.translate("Main", u"select file from recordings or import", None))
         self.audio_player_current_time.setText(QCoreApplication.translate("Main", u"0:00", None))
         self.audio_player_duration.setText(QCoreApplication.translate("Main", u"0:00", None))
         self.backward_button.setText("")

@@ -44,3 +44,11 @@ iconBackwardGray.addFile(u":/Icons/images/icons/icons8-replay_gray.png",
 iconBackwardRed = QIcon()
 iconBackwardRed.addFile(u":/Icons/images/icons/icons8-replay_red.png",
                         QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+
+iconSoundGray = QIcon()
+iconSoundGray.addFile(u":/Icons/images/icons/icons8-audiomaster_gray.png",
+                      QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+
+iconSoundRed = QIcon()
+iconSoundRed.addFile(u":/Icons/images/icons/icons8-audiomaster_red.png",
+                     QSize(), QIcon.Mode.Normal, QIcon.State.Off)
