@@ -2,7 +2,7 @@ import time
 import os
 import pygame
 
-from audio_util import convert_audio
+from .audio_util import convert_audio
 
 
 class AudioPlayer():

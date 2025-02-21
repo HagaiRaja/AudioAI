@@ -15,11 +15,11 @@ from PySide6.QtCore import (Qt, QRect, QSize, QCoreApplication, QTimer)
 #     pyside6-uic form.ui -o ui_form.py, or
 #     pyside2-uic form.ui -o ui_form.py
 from ui_form import Ui_Main
-from audio_player import AudioPlayer
-from audio_recorder import AudioRecorder
-from custom_widget import SelectableLabel
-from transcribe import Transcribe
-from ollama_helper import generate_response_stream
+from helper.audio_player import AudioPlayer
+from helper.audio_recorder import AudioRecorder
+from helper.transcribe import Transcribe
+from helper.ollama_helper import generate_response_stream
+from custom_widget.selectable_label import SelectableLabel
 
 
 class Main(QWidget):
@@ -687,7 +687,7 @@ class Main(QWidget):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     widget = Main()
-    from constant import (
+    from helper.constant import (
         iconPlayRed, iconPlayGray, iconPauseRed,
         iconRecordGray, iconRecordRed,
         iconRecordDotGray, iconRecordDotRed,
