@@ -19,6 +19,7 @@ from audio_player import AudioPlayer
 from audio_recorder import AudioRecorder
 from custom_widget import SelectableLabel
 from transcribe import Transcribe
+from ollama_helper import generate_response_stream
 
 
 class Main(QWidget):
@@ -75,6 +76,7 @@ class Main(QWidget):
             else original_keyPressEvent(event)
 
         self.ui.clear_chat_button.clicked.connect(self.clear_chat)
+        self.ui.ai_chatbox_input_textarea.setReadOnly(True)
 
     def get_file_for(self, purpose):
         extension = "." + self.audio_player.filepath.split(".")[-1]
@@ -112,12 +114,14 @@ class Main(QWidget):
 
         self.ui.transcribe_container.setStyleSheet(u"background-color: #F00;\n"
                                                    "border-radius: 10px;")
+        QCoreApplication.processEvents()
         self.transcription = self.transcriber.transcribe_audio(
             self.audio_player.filepath)
         self.store_transcription()
         self.transcription_status = "Transcribed"
         self.ui.transcribe_container.setStyleSheet(u"background-color: #2B2B2B;\n"
                                                    "border-radius: 10px;")
+        QCoreApplication.processEvents()
         self.refresh_transcription_status()
 
     def align_transcription(self):
@@ -130,12 +134,14 @@ class Main(QWidget):
 
         self.ui.alignment_container.setStyleSheet(u"background-color: #F00;\n"
                                                   "border-radius: 10px;")
+        QCoreApplication.processEvents()
         self.transcription = self.transcriber.align_transcription(
             self.transcription, self.audio_player.filepath)
         self.store_transcription()
         self.transcription_status = "Aligned"
         self.ui.alignment_container.setStyleSheet(u"background-color: #2B2B2B;\n"
                                                   "border-radius: 10px;")
+        QCoreApplication.processEvents()
         self.refresh_transcription_status()
 
     def diarize_transcription(self):
@@ -150,12 +156,14 @@ class Main(QWidget):
 
         self.ui.diarization_container.setStyleSheet(u"background-color: #F00;\n"
                                                     "border-radius: 10px;")
+        QCoreApplication.processEvents()
         self.transcription = self.transcriber.diarize_transcription(
             self.transcription, self.audio_player.filepath)
         self.store_transcription()
         self.transcription_status = "Diarized"
         self.ui.diarization_container.setStyleSheet(u"background-color: #2B2B2B;\n"
                                                     "border-radius: 10px;")
+        QCoreApplication.processEvents()
         self.refresh_transcription_status()
 
     def save_audio(self, audio_data):
@@ -207,6 +215,9 @@ class Main(QWidget):
             self.ui.menu_record_button.setIcon(iconRecordRed)
         self.is_show_recorder = not self.is_show_recorder
         self.render_transcription()
+        self.refresh_chat()
+        self.ui.ai_chatbox_input_textarea.setReadOnly(True)
+        self.ui.ai_chatbox_input_textarea.clear()
 
     def shift_audio(self, seconds=10):
         if not self.is_audio_selected:
@@ -259,6 +270,7 @@ class Main(QWidget):
             20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
         self.ui.ai_chatbox_history_layout.addItem(
             self.ui.ai_chatbox_verticalSpacer)
+        self.chat_history = []
 
     def store_chat(self):
         chat_file = self.get_file_for("chat")
@@ -293,6 +305,8 @@ class Main(QWidget):
     def refresh_chat_textarea(self):
         # Clear the input area
         self.ui.ai_chatbox_input_textarea.clear()
+        if self.is_audio_selected:
+            self.ui.ai_chatbox_input_textarea.setReadOnly(False)
 
         # Scroll to the bottom of the chat history
         QTimer.singleShot(100, lambda: self.ui.ai_chatbox_history_scrollArea.verticalScrollBar().setValue(
@@ -300,23 +314,28 @@ class Main(QWidget):
         ))
 
     def send_message(self):
-        # Get the user's message
-        user_message = self.ui.ai_chatbox_input_textarea.toPlainText().strip()
-        if not user_message:
+        prompt = self.ui.ai_chatbox_input_textarea.toPlainText().strip()
+        self.refresh_chat_textarea()
+        if not prompt:
             return  # Do nothing if the message is empty
 
-        # Add the user's message to the chat history
-        human_label = self.generate_qt_chat(user_message, "human")
+        human_label = self.generate_qt_chat(prompt, "human")
         self.ui.ai_chatbox_history_layout.addWidget(human_label)
-        self.chat_history.append(("human", user_message))
+        self.chat_history.append(("human", prompt))
 
-        # Add the bot's reply to the chat history
-        bot_reply = f"You said: '{user_message}'?"
-        bot_label = self.generate_qt_chat(bot_reply, "bot")
+        response = ""
+        bot_label = self.generate_qt_chat(response, "bot")
         self.ui.ai_chatbox_history_layout.addWidget(bot_label)
-        self.chat_history.append(("bot", bot_reply))
 
-        self.refresh_chat_textarea()
+        for chunk in generate_response_stream(prompt):
+            response += chunk
+            bot_label.findChild(SelectableLabel).setText(response)
+            QCoreApplication.processEvents()
+            QTimer.singleShot(100, lambda: self.ui.ai_chatbox_history_scrollArea.verticalScrollBar().setValue(
+                self.ui.ai_chatbox_history_scrollArea.verticalScrollBar().maximum()))
+            QCoreApplication.processEvents()
+        self.chat_history.append(("bot", response))
+
         self.store_chat()
 
     def select_directory_dialog(self):
