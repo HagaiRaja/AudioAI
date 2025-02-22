@@ -849,14 +849,14 @@ class Ui_Main(object):
 "border-radius: 10px;")
         self.ai_chatbox_human1.setFrameShape(QFrame.StyledPanel)
         self.ai_chatbox_human1.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_31 = QVBoxLayout(self.ai_chatbox_human1)
-        self.verticalLayout_31.setObjectName(u"verticalLayout_31")
+        self.verticalLayout_29 = QVBoxLayout(self.ai_chatbox_human1)
+        self.verticalLayout_29.setObjectName(u"verticalLayout_29")
         self.ai_chatbox_human1_label = QLabel(self.ai_chatbox_human1)
         self.ai_chatbox_human1_label.setObjectName(u"ai_chatbox_human1_label")
         self.ai_chatbox_human1_label.setStyleSheet(u"color: #FFF;")
         self.ai_chatbox_human1_label.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
-        self.verticalLayout_31.addWidget(self.ai_chatbox_human1_label)
+        self.verticalLayout_29.addWidget(self.ai_chatbox_human1_label)
 
 
         self.verticalLayout_27.addWidget(self.ai_chatbox_human1)
@@ -867,51 +867,53 @@ class Ui_Main(object):
 "border-radius: 10px;")
         self.ai_chatbox_bot1.setFrameShape(QFrame.StyledPanel)
         self.ai_chatbox_bot1.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_30 = QVBoxLayout(self.ai_chatbox_bot1)
-        self.verticalLayout_30.setObjectName(u"verticalLayout_30")
+        self.verticalLayout_28 = QVBoxLayout(self.ai_chatbox_bot1)
+        self.verticalLayout_28.setSpacing(0)
+        self.verticalLayout_28.setObjectName(u"verticalLayout_28")
+        self.ai_chatbox_bot1_ref = QFrame(self.ai_chatbox_bot1)
+        self.ai_chatbox_bot1_ref.setObjectName(u"ai_chatbox_bot1_ref")
+        self.ai_chatbox_bot1_ref.setFrameShape(QFrame.StyledPanel)
+        self.ai_chatbox_bot1_ref.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_14 = QHBoxLayout(self.ai_chatbox_bot1_ref)
+        self.horizontalLayout_14.setSpacing(5)
+        self.horizontalLayout_14.setObjectName(u"horizontalLayout_14")
+        self.horizontalLayout_14.setContentsMargins(0, 0, 0, 5)
+        self.ai_chatbox_bot1_btn1 = QPushButton(self.ai_chatbox_bot1_ref)
+        self.ai_chatbox_bot1_btn1.setObjectName(u"ai_chatbox_bot1_btn1")
+        self.ai_chatbox_bot1_btn1.setMinimumSize(QSize(50, 20))
+        self.ai_chatbox_bot1_btn1.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.ai_chatbox_bot1_btn1.setStyleSheet(u"color: \"#000\";\n"
+"background-color: #FFC9C9;\n"
+"border-radius: 10px;")
+
+        self.horizontalLayout_14.addWidget(self.ai_chatbox_bot1_btn1)
+
+        self.ai_chatbox_bot1_btn2 = QPushButton(self.ai_chatbox_bot1_ref)
+        self.ai_chatbox_bot1_btn2.setObjectName(u"ai_chatbox_bot1_btn2")
+        self.ai_chatbox_bot1_btn2.setMinimumSize(QSize(50, 20))
+        self.ai_chatbox_bot1_btn2.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.ai_chatbox_bot1_btn2.setStyleSheet(u"color: \"#000\";\n"
+"background-color: #FFC9C9;\n"
+"border-radius: 10px;")
+
+        self.horizontalLayout_14.addWidget(self.ai_chatbox_bot1_btn2)
+
+        self.ai_chatbox_bot1_ref_horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_14.addItem(self.ai_chatbox_bot1_ref_horizontalSpacer)
+
+
+        self.verticalLayout_28.addWidget(self.ai_chatbox_bot1_ref)
+
         self.ai_chatbox_bot1_label = QLabel(self.ai_chatbox_bot1)
         self.ai_chatbox_bot1_label.setObjectName(u"ai_chatbox_bot1_label")
         self.ai_chatbox_bot1_label.setStyleSheet(u"color: #FFF;")
+        self.ai_chatbox_bot1_label.setWordWrap(True)
 
-        self.verticalLayout_30.addWidget(self.ai_chatbox_bot1_label)
+        self.verticalLayout_28.addWidget(self.ai_chatbox_bot1_label)
 
 
         self.verticalLayout_27.addWidget(self.ai_chatbox_bot1)
-
-        self.ai_chatbox_human2 = QFrame(self.scrollAreaWidgetContents)
-        self.ai_chatbox_human2.setObjectName(u"ai_chatbox_human2")
-        self.ai_chatbox_human2.setStyleSheet(u"background-color: #575757;\n"
-"border-radius: 10px;")
-        self.ai_chatbox_human2.setFrameShape(QFrame.StyledPanel)
-        self.ai_chatbox_human2.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_29 = QVBoxLayout(self.ai_chatbox_human2)
-        self.verticalLayout_29.setObjectName(u"verticalLayout_29")
-        self.ai_chatbox_human2_label = QLabel(self.ai_chatbox_human2)
-        self.ai_chatbox_human2_label.setObjectName(u"ai_chatbox_human2_label")
-        self.ai_chatbox_human2_label.setStyleSheet(u"color: #FFF;")
-        self.ai_chatbox_human2_label.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-
-        self.verticalLayout_29.addWidget(self.ai_chatbox_human2_label)
-
-
-        self.verticalLayout_27.addWidget(self.ai_chatbox_human2)
-
-        self.ai_chatbox_bot2 = QFrame(self.scrollAreaWidgetContents)
-        self.ai_chatbox_bot2.setObjectName(u"ai_chatbox_bot2")
-        self.ai_chatbox_bot2.setStyleSheet(u"background-color: #868686;\n"
-"border-radius: 10px;")
-        self.ai_chatbox_bot2.setFrameShape(QFrame.StyledPanel)
-        self.ai_chatbox_bot2.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_28 = QVBoxLayout(self.ai_chatbox_bot2)
-        self.verticalLayout_28.setObjectName(u"verticalLayout_28")
-        self.ai_chatbox_bot2_label = QLabel(self.ai_chatbox_bot2)
-        self.ai_chatbox_bot2_label.setObjectName(u"ai_chatbox_bot2_label")
-        self.ai_chatbox_bot2_label.setStyleSheet(u"color: #FFF;")
-
-        self.verticalLayout_28.addWidget(self.ai_chatbox_bot2_label)
-
-
-        self.verticalLayout_27.addWidget(self.ai_chatbox_bot2)
 
         self.ai_chatbox_history_scrollArea.setWidget(self.scrollAreaWidgetContents)
 
@@ -1118,14 +1120,10 @@ class Ui_Main(object):
         self.play_button.setText("")
         self.forward_button.setText("")
         self.clear_chat_button.setText(QCoreApplication.translate("Main", u"Clear Chat", None))
-        self.ai_chatbox_human1_label.setText(QCoreApplication.translate("Main", u"List all Past Medical History of Bob!", None))
-        self.ai_chatbox_bot1_label.setText(QCoreApplication.translate("Main", u"asdasdasd\n"
-"sdasdasd\n"
-"asdasdasd", None))
-        self.ai_chatbox_human2_label.setText(QCoreApplication.translate("Main", u"List all Past Medical History of Bob!", None))
-        self.ai_chatbox_bot2_label.setText(QCoreApplication.translate("Main", u"asdasdasd\n"
-"sdasdasd\n"
-"asdasdasd", None))
+        self.ai_chatbox_human1_label.setText(QCoreApplication.translate("Main", u"What is the patient's current medication?", None))
+        self.ai_chatbox_bot1_btn1.setText(QCoreApplication.translate("Main", u"00:12", None))
+        self.ai_chatbox_bot1_btn2.setText(QCoreApplication.translate("Main", u"00:15", None))
+        self.ai_chatbox_bot1_label.setText(QCoreApplication.translate("Main", u"The patient is currently taking Paracetamol and Amoxicillin for his fever and cough. [00:12] The patient is also taking Vitamin C for his immune system. [00:15]", None))
         self.ai_chatbox_input_textarea.setPlaceholderText(QCoreApplication.translate("Main", u"Ask anything about the audio content...", None))
         self.ai_chatbox_input_button.setText("")
         self.transcription_label.setText(QCoreApplication.translate("Main", u"Transcription", None))

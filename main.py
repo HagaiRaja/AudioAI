@@ -5,8 +5,9 @@ import time
 import shutil
 import wave
 import json
+import re
 
-from PySide6.QtWidgets import QApplication, QWidget, QFileDialog, QVBoxLayout, QFrame, QLabel, QSpacerItem, QSizePolicy, QMessageBox
+from PySide6.QtWidgets import QApplication, QWidget, QFileDialog, QVBoxLayout, QGridLayout, QFrame, QLabel, QSpacerItem, QSizePolicy, QMessageBox, QPushButton
 from PySide6.QtGui import (QFont, QCursor, QIcon)
 from PySide6.QtCore import (Qt, QRect, QSize, QCoreApplication, QTimer)
 
@@ -18,7 +19,7 @@ from ui_form import Ui_Main
 from helper.audio_player import AudioPlayer
 from helper.audio_recorder import AudioRecorder
 from helper.transcribe import Transcribe
-from helper.ollama_helper import generate_response_stream
+from helper.simple_rag import SimpleRAG, stream_response
 from custom_widget.selectable_label import SelectableLabel
 
 
@@ -94,6 +95,9 @@ class Main(QWidget):
 
     def _init_ai(self):
         self.transcriber = Transcribe()
+        self.rag = SimpleRAG(path=self.root_dir)
+        self.transcription_text = ""
+        self.rag_document = ""
         self.ui.transcribe_container.mousePressEvent = lambda event: self.transcribe_audio()
         self.ui.alignment_container.mousePressEvent = lambda event: self.align_transcription()
         self.ui.diarization_container.mousePressEvent = lambda event: self.diarize_transcription()
@@ -277,7 +281,7 @@ class Main(QWidget):
         with open(chat_file, "w") as f:
             json.dump(self.chat_history, f)
 
-    def generate_qt_chat(self, message, sender):
+    def generate_qt_chat(self, message, sender, reference=[]):
         if sender == "bot":
             color = "#868686"
         else:
@@ -291,6 +295,40 @@ class Main(QWidget):
         qt_label_layout = QVBoxLayout(qt_label)
         qt_label_layout.setObjectName(
             f"ai_chatbox_{sender}_verticalLayout_{len(self.chat_history)}")
+
+        if len(reference):
+            qt_label_ref = QWidget()
+            qt_label_ref.setObjectName(
+                f"ai_chatbox_bot{len(self.chat_history)}_ref")
+            qt_label_ref_layout = QGridLayout(qt_label_ref)
+            qt_label_ref_layout.setSpacing(5)
+            qt_label_ref_layout.setObjectName(
+                f"ai_chatbox_bot{len(self.chat_history)}_ref_layout")
+            qt_label_ref_layout.setContentsMargins(0, 0, 0, 5)
+            qt_label_ref_layout.setAlignment(Qt.AlignLeft)
+
+            for idx, ref in enumerate(reference):
+                qt_label_ref_btn = QPushButton(qt_label_ref)
+                qt_label_ref_btn.setObjectName(
+                    f"ai_chatbox_bot{len(self.chat_history)}_btn{idx}")
+                qt_label_ref_btn.setMinimumSize(QSize(50, 20))
+                qt_label_ref_btn.setMaximumSize(QSize(50, 20))
+                qt_label_ref_btn.setCursor(
+                    QCursor(Qt.CursorShape.PointingHandCursor))
+                qt_label_ref_btn.setStyleSheet(u"color: \"#000\";\n"
+                                               "background-color: #FFC9C9;\n"
+                                               "border-radius: 10px;")
+                qt_label_ref_btn.setText(
+                    QCoreApplication.translate("Main", ref, None))
+                # when qt_label_ref_btn click jump to the timestamp, timestamp need to be converted from "00:00" to seconds
+                st = int(ref.split(":")[0]) * 60 + int(ref.split(":")[1])
+                qt_label_ref_btn.mousePressEvent = lambda event, st=st: self.audio_jump_to(
+                    st)
+                qt_label_ref_layout.addWidget(
+                    qt_label_ref_btn, idx // 3, idx % 3)
+
+                qt_label_layout.addWidget(qt_label_ref)
+
         qt_label_content = SelectableLabel(message, qt_label)
         qt_label_content.setObjectName(
             f"ai_chatbox_{sender}{len(self.chat_history)}_label")
@@ -314,20 +352,27 @@ class Main(QWidget):
         ))
 
     def send_message(self):
-        prompt = self.ui.ai_chatbox_input_textarea.toPlainText().strip()
+        query = self.ui.ai_chatbox_input_textarea.toPlainText().strip()
         self.refresh_chat_textarea()
-        if not prompt:
+        if not query:
             return  # Do nothing if the message is empty
 
-        human_label = self.generate_qt_chat(prompt, "human")
+        human_label = self.generate_qt_chat(query, "human")
         self.ui.ai_chatbox_history_layout.addWidget(human_label)
-        self.chat_history.append(("human", prompt))
+        self.chat_history.append(("human", query))
 
         response = ""
-        bot_label = self.generate_qt_chat(response, "bot")
+        raw_response = self.rag.ask(query, self.chat_history)
+        timestamps = re.findall(r"\[(\d{2}:\d{2})\]", raw_response) + \
+            re.findall(r"\[(\d{2}:\d{2}:\d{2})\]", raw_response)
+        bot_label = self.generate_qt_chat(response, "bot", timestamps)
         self.ui.ai_chatbox_history_layout.addWidget(bot_label)
 
-        for chunk in generate_response_stream(prompt):
+        # get all the timestamps from the response
+        raw_response = raw_response.replace("![", "[")
+        print(raw_response)
+
+        for chunk in stream_response(raw_response):
             response += chunk
             bot_label.findChild(SelectableLabel).setText(response)
             QCoreApplication.processEvents()
@@ -457,7 +502,6 @@ class Main(QWidget):
         extension = "." + filepath.split(".")[-1]
         transcription_file = os.path.join(
             self.root_dir, filepath.replace(extension, "_transcription.json"))
-        print(transcription_file)
         if not os.path.exists(transcription_file):
             return "None", None
         transcription = json.load(open(transcription_file, "r"))
@@ -532,6 +576,7 @@ class Main(QWidget):
             return qt_segment
 
         if not self.is_show_recorder:
+            doc_text = ""
             if self.transcription_status == "None":
                 self.ui.transcription_layout.addWidget(generate_qt_segment(
                     "No transcription available.\n\n"
@@ -540,19 +585,45 @@ class Main(QWidget):
                 for idx, segment in enumerate(self.transcription["segments"]):
                     self.ui.transcription_layout.addWidget(generate_qt_segment(
                         segment["text"], int(segment['start']), "#575757", 0, idx))
+                    doc_text += int2hour(int(segment['start'])) + \
+                        " " + segment["text"] + "\n"
             elif self.transcription_status == "Diarized":
                 for idx, segment in enumerate(self.transcription["segments"]):
-                    speaker_id, color = "99", "#000"
+                    speaker_id, speaker_name, color = "99", "SPEAKER_??", "#000"
                     if "speaker" in segment:
                         speaker_id = int(segment["speaker"].split("_")[-1])
                         color = colors[speaker_id % len(colors)]
+                        speaker_name = segment["speaker"]
                     self.ui.transcription_layout.addWidget(generate_qt_segment(
                         segment["text"], int(segment['start']), color, speaker_id, idx))
+                    doc_text += int2hour(int(segment['start'])) + \
+                        " " + speaker_name + \
+                        ": " + segment["text"] + "\n"
+
+            self.update_rag(doc_text)
 
         self.ui.transcription_verticalSpacer = QSpacerItem(
             20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
         self.ui.transcription_layout.addItem(
             self.ui.transcription_verticalSpacer)
+
+    def update_rag(self, doc_text):
+        def path2collectionName(path):
+            cleaned_path = re.sub(r'[^a-zA-Z0-9]', '-', path.replace(" ", "_"))
+            # and remove any trailing hyphens
+            cleaned_path = re.sub(r'[-]+', '-', cleaned_path)
+            # the beginning and end of string must be alphanumeric
+            cleaned_path = re.sub(
+                r'^[^a-zA-Z0-9]+|[^a-zA-Z0-9]+$', '', cleaned_path)
+            return cleaned_path[:63]  # 63 is max length for collection name
+
+        if doc_text == self.transcription_text:
+            return
+        self.transcription_text = doc_text
+        collection_name = path2collectionName(self.audio_player.filepath)
+        print("RAG updating", collection_name, "\n", doc_text[:100])
+        self.rag.load_document(collection_name, doc_text)
+        print("RAG updated")
 
     def refresh_transcription_status(self):
         if self.transcription_status == "None":
@@ -611,7 +682,6 @@ class Main(QWidget):
                 created_at = time.strftime(
                     "%a, %Y-%m-%d %H:%M", time.localtime(created_at))
                 files.append((filepath, created_at))
-                print(files[-1])
 
         # sort files by created_at from newest to oldest
         files.sort(key=lambda x: x[1], reverse=True)

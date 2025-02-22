@@ -1894,14 +1894,14 @@ border-radius: 10px;</string>
                   <property name="frameShadow">
                    <enum>QFrame::Raised</enum>
                   </property>
-                  <layout class="QVBoxLayout" name="verticalLayout_31">
+                  <layout class="QVBoxLayout" name="verticalLayout_29">
                    <item>
                     <widget class="QLabel" name="ai_chatbox_human1_label">
                      <property name="styleSheet">
                       <string notr="true">color: #FFF;</string>
                      </property>
                      <property name="text">
-                      <string>List all Past Medical History of Bob!</string>
+                      <string>What is the patient's current medication?</string>
                      </property>
                      <property name="alignment">
                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -1923,73 +1923,102 @@ border-radius: 10px;</string>
                   <property name="frameShadow">
                    <enum>QFrame::Raised</enum>
                   </property>
-                  <layout class="QVBoxLayout" name="verticalLayout_30">
+                  <layout class="QVBoxLayout" name="verticalLayout_28">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QFrame" name="ai_chatbox_bot1_ref">
+                     <property name="frameShape">
+                      <enum>QFrame::StyledPanel</enum>
+                     </property>
+                     <property name="frameShadow">
+                      <enum>QFrame::Raised</enum>
+                     </property>
+                     <layout class="QHBoxLayout" name="horizontalLayout_14">
+                      <property name="spacing">
+                       <number>5</number>
+                      </property>
+                      <property name="leftMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="topMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="rightMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="bottomMargin">
+                       <number>5</number>
+                      </property>
+                      <item>
+                       <widget class="QPushButton" name="ai_chatbox_bot1_btn1">
+                        <property name="minimumSize">
+                         <size>
+                          <width>50</width>
+                          <height>20</height>
+                         </size>
+                        </property>
+                        <property name="cursor">
+                         <cursorShape>PointingHandCursor</cursorShape>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: &quot;#000&quot;;
+background-color: #FFC9C9;
+border-radius: 10px;</string>
+                        </property>
+                        <property name="text">
+                         <string>00:12</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QPushButton" name="ai_chatbox_bot1_btn2">
+                        <property name="minimumSize">
+                         <size>
+                          <width>50</width>
+                          <height>20</height>
+                         </size>
+                        </property>
+                        <property name="cursor">
+                         <cursorShape>PointingHandCursor</cursorShape>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: &quot;#000&quot;;
+background-color: #FFC9C9;
+border-radius: 10px;</string>
+                        </property>
+                        <property name="text">
+                         <string>00:15</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <spacer name="ai_chatbox_bot1_ref_horizontalSpacer">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>40</width>
+                          <height>20</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                     </layout>
+                    </widget>
+                   </item>
                    <item>
                     <widget class="QLabel" name="ai_chatbox_bot1_label">
                      <property name="styleSheet">
                       <string notr="true">color: #FFF;</string>
                      </property>
                      <property name="text">
-                      <string>asdasdasd
-sdasdasd
-asdasdasd</string>
+                      <string>The patient is currently taking Paracetamol and Amoxicillin for his fever and cough. [00:12] The patient is also taking Vitamin C for his immune system. [00:15]</string>
                      </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QFrame" name="ai_chatbox_human2">
-                  <property name="styleSheet">
-                   <string notr="true">background-color: #575757;
-border-radius: 10px;</string>
-                  </property>
-                  <property name="frameShape">
-                   <enum>QFrame::StyledPanel</enum>
-                  </property>
-                  <property name="frameShadow">
-                   <enum>QFrame::Raised</enum>
-                  </property>
-                  <layout class="QVBoxLayout" name="verticalLayout_29">
-                   <item>
-                    <widget class="QLabel" name="ai_chatbox_human2_label">
-                     <property name="styleSheet">
-                      <string notr="true">color: #FFF;</string>
-                     </property>
-                     <property name="text">
-                      <string>List all Past Medical History of Bob!</string>
-                     </property>
-                     <property name="alignment">
-                      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QFrame" name="ai_chatbox_bot2">
-                  <property name="styleSheet">
-                   <string notr="true">background-color: #868686;
-border-radius: 10px;</string>
-                  </property>
-                  <property name="frameShape">
-                   <enum>QFrame::StyledPanel</enum>
-                  </property>
-                  <property name="frameShadow">
-                   <enum>QFrame::Raised</enum>
-                  </property>
-                  <layout class="QVBoxLayout" name="verticalLayout_28">
-                   <item>
-                    <widget class="QLabel" name="ai_chatbox_bot2_label">
-                     <property name="styleSheet">
-                      <string notr="true">color: #FFF;</string>
-                     </property>
-                     <property name="text">
-                      <string>asdasdasd
-sdasdasd
-asdasdasd</string>
+                     <property name="wordWrap">
+                      <bool>true</bool>
                      </property>
                     </widget>
                    </item>

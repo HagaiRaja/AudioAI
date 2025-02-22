@@ -6,3 +6,5 @@ python-dotenv
 ffmpeg-python
 llm
 chromadb
+ollama
+sentence_transformers
